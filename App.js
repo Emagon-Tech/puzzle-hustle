@@ -13,15 +13,15 @@ import {
 import SortableGrid from 'react-native-sortable-grid'
 const App=()=> {
     const [img, setimg] = useState([
-        { id: '0', image: 'http://192.168.0.10:5000/getimg?id=1_01_01.png' },
-        { id: '1', image: 'http://192.168.0.10:5000/getimg?id=1_01_02.png' },
-        { id: '2', image: 'http://192.168.0.10:5000/getimg?id=1_01_03.png' },
-        { id: '3', image: 'http://192.168.0.10:5000/getimg?id=1_02_01.png' },
-        { id: '4', image: 'http://192.168.0.10:5000/getimg?id=1_02_02.png' },
-        { id: '7', image: 'http://192.168.0.10:5000/getimg?id=1_03_02.png' },
-        { id: '5', image: 'http://192.168.0.10:5000/getimg?id=1_02_03.png' },
-        { id: '8', image: 'http://192.168.0.10:5000/getimg?id=1_03_03.png' },
-        { id: '6', image: 'http://192.168.0.10:5000/getimg?id=1_03_01.png' },
+        { id: '0', image: 'https://192.168.0.50:5000/getimg?id=1_01_01.png' },
+        { id: '1', image: 'https://192.168.0.50:5000/getimg?id=1_01_02.png' },
+        { id: '2', image: 'https://192.168.0.50:5000/getimg?id=1_01_03.png' },
+        { id: '3', image: 'https://192.168.0.50:5000/getimg?id=1_02_01.png' },
+        { id: '4', image: 'https://192.168.0.50:5000/getimg?id=1_02_02.png' },
+        { id: '7', image: 'https://192.168.0.50:5000/getimg?id=1_03_02.png' },
+        { id: '5', image: 'https://192.168.0.50:5000/getimg?id=1_02_03.png' },
+        { id: '8', image: 'https://192.168.0.50:5000/getimg?id=1_03_03.png' },
+        { id: '6', image: 'https://192.168.0.50:5000/getimg?id=1_03_01.png' },
     ]
     );
 
@@ -43,10 +43,10 @@ const shufflingArray=(images) =>{
     }
 const fetching= async () =>   {
         //console.log(imageurls);
-         const url = "http://192.168.0.10:5000/getimg?id=";
+         const url = "https://192.168.0.50:5000/getimg?id=";
     let images = img.slice();
         console.log('fetching.....');
-        await fetch("http://192.168.0.10:5000/tic")
+        await fetch("https://192.168.0.50:5000/tic")
             .then(response => response.json())
             .then(res => {
                 imagejson = res;

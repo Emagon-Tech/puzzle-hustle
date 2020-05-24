@@ -1,51 +1,52 @@
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+
 import {
     StyleSheet,
     View,
     Image,
     Dimensions,
     Alert,
-    Text,
     ImageBackground,
-    TouchableHighlight
 } from 'react-native';
 
 import SortableGrid from 'react-native-sortable-grid';
+
+import Timer from './Timer';
+
 let stepsCount = 0;
-let timeTaken = 0;
+let timeGiven = 0;
 let gridsize = 0;
 let blockheight = 0;
+let shuffledimages = [];
 const Game = ({ route, navigation }) => {
-    const { level } = route.params;
+    const [stopwatchStart, setStart] = useState(true);
+    const [stopwatchReset, setReset] = useState(false);
+    const  { level } = route.params;
     switch (level) {
-        case 'Easy': gridsize = 3; blockheight = 138;
+        case 'Easy': gridsize = 3; blockheight = 138; timeGiven = 10;
             break;
-        case 'Medium': gridsize = 4;blockheight = 104;
+        case 'Medium': gridsize = 4;blockheight = 104;timeGiven = 20;
             break;
-        case 'Hard': gridsize = 5;blockheight= 84;
+        case 'Hard': gridsize = 5;blockheight= 84;timeGiven = 25;
             break;
     
         default:
-            console.log('Some in route props'+level);
+            console.log('Some PRblem in route props'+level);
             break;
     }
     useEffect(() => {
-        fetching();
-        
+        console.log("in useEffect()");
+        fetching();    
     }, []);
-    
-    console.log(gridsize);
     
     let range = [...Array(gridsize * gridsize).keys()];
     
     const [img, setimg] = useState(range.map((item, index) => { return ({ id: '' + index, image: '' }) }));
-    
+    const [reset, setreset] = useState(false);
     const { height, width } = Dimensions.get('window');
     
     const shufflingArray=(images) =>{
-        console.log("images");
-        console.log(images);
         let randindex = 2;
         let tmp = {}
         for (var i = images.length - 1; i > 0; i--) {
@@ -54,8 +55,6 @@ const Game = ({ route, navigation }) => {
         images[i] = images[randindex];
         images[randindex] = tmp;
         }
-        console.log("shuffled images");
-        console.log(images);
         return images;   
     }
     const fetching= async () =>   {
@@ -65,22 +64,22 @@ const Game = ({ route, navigation }) => {
         await fetch("http://192.168.0.10:5000/tic?gs="+gridsize)
             .then(response => response.json())
             .then(res => {
-                console.log('response from fetch');
-                console.log(res);
              let imagejson = res;
                 for (let i = 0; i < imagejson.length; i++) {
                     images[i]['image'] = url + imagejson[i];
                     images[i]['id'] = i;
                 }
                 setimg(images);
-                console.log(img);
             })
             .catch(err => console.log(err));
-         
+        shuffledimages = shufflingArray(img);
 }
-    const isSolved=(itemOrderArray)=> {
+    const isSolved=(itemOrderArray) => {
         let bo = true;
+        console.log('img');
         console.log(img);
+        console.log('Iorder');
+        console.log(itemOrderArray);
         for (let i = 0; i < itemOrderArray.length; i++) {
             
                 if(!(i==img[itemOrderArray[i]['key']]['id'])){bo=false}
@@ -91,20 +90,25 @@ const Game = ({ route, navigation }) => {
 
 const isWinner=(itemOrderArray) => {
     if (isSolved(itemOrderArray)) {
-        //stepsCount = 0;
-        setModalVisible(true);
-            // Alert.alert( 'Congratulations!Continue to the next puzzle?',
-            //     'Number of Counts: ' + stepsCount+' Time Taken: '+timeTaken,
-            //     [
-            //         { text: 'Yes', onPress: () => { fetching(); } },
-            //         { text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel' },],
-            //     { cancelable: false });
+            Alert.alert( 'Congratulations!Continue to the next puzzle?',
+                'Number of Counts: ' + stepsCount+' Time Taken: '+timeTaken,
+                [
+                    { text: 'Yes', onPress: () => { fetching();} },
+                    { text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel' },],
+                { cancelable: false });
         }
     }
     
     
-    
-
+    const handlingtimerfinish = () => {
+        Alert.alert( 'OOPS!',
+                'Time UP',
+                [
+                    { text: 'Restart', onPress: () => { setreset(true);} },
+                    { text: 'Home', onPress: () => navigation.navigate('SinglePlayerScreen'), style: 'cancel' },],
+                { cancelable: false });
+        
+    };
 const styles = StyleSheet.create({
     container: {
     flex: 1,
@@ -149,7 +153,6 @@ const styles = StyleSheet.create({
     textAlign: "center"
   }
 });
-    console.log(img);
 
 
     return (
@@ -162,7 +165,6 @@ const styles = StyleSheet.create({
                         }}
                 source={require('../img/background.png')}
             >
-
             <SortableGrid
                     blockTransitionDuration={50}
                     activeBlockCenteringDuration={200}
@@ -175,7 +177,7 @@ const styles = StyleSheet.create({
                     onDragStart={() => console.log("Some block is being dragged now!")}
             >
                 {
-                        shufflingArray(img).map((item,index) =>
+                        shuffledimages.map((item,index) =>
                             <View key={index}  onTap={() => console.log(index)}>
                             <Image
                                 style={{ height:blockheight, width: width / gridsize }}
@@ -185,7 +187,8 @@ const styles = StyleSheet.create({
                     )
                 }
 
-            </SortableGrid>
+                </SortableGrid>
+                <Timer handlefinish={setreset}  timegiven={timeGiven}/>
             </ImageBackground>
         </>
     );

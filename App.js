@@ -5,6 +5,8 @@ import  Home  from './Components/HomeScreen';
 import Game from './Components/Game';
 import SinglePlayerMode from './Components/SinglePlayer';
 import Modelnamed from './Components/modaling';
+import BoardScr from './Components/Board';
+
 const Stack = createStackNavigator();
 
 function MyStack() {
@@ -37,7 +39,8 @@ function MyStack() {
               <Stack.Screen
                   name="Models"
                   component={Modelnamed}
-                  />
+              />
+              <Stack.Screen name="BoardScreen" component={BoardScr}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

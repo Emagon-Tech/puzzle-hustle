@@ -1,42 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
-    StyleSheet,
-    View,
-    Image,
-    Dimensions,
-    Alert,
-    Text,
-    ImageBackground,
-    TouchableHighlight
-} from 'react-native';
+  StyleSheet,
+  View,
+  Image,
+  Dimensions,
+  Alert,
+  Text,
+  ImageBackground,
+  TouchableHighlight,
+} from "react-native";
 
-import Game from './Game';
+import Game from "./Game";
 
 const BoardScr = ({ route, navigation }) => {
-    
-    let timer = 0;
-    const { level } = route.params;
-    setTimeout(() => {
-        timer = timer + 1;
-    }, 1000);
-    return (
-        <>
-            <View>
-                <Stopwatch laps msecs start={this.state.stopwatchStart}
+  let timer = 0;
+  const { level } = route.params;
+  setTimeout(() => {
+    timer = timer + 1;
+  }, 1000);
+  return (
+    <>
+      <View>
+        <Stopwatch
+          laps
+          msecs
+          start={this.state.stopwatchStart}
           reset={this.state.stopwatchReset}
-                    options={options}
-                    startTime={0}
-                getTime={this.getFormattedTime} />
-                <Game level={level}/>
-            </View>
-            </>
-);
-}
+          options={options}
+          startTime={0}
+          getTime={this.getFormattedTime}
+        />
+        <Game level={level} />
+      </View>
+    </>
+  );
+};
 
-const styles = StyleSheet.create(
-    {
-        timer: {
-            alignContent:'flex-end',
-        }
-    });
+const styles = StyleSheet.create({
+  timer: {
+    alignContent: "flex-end",
+  },
+});
 export default BoardScr;

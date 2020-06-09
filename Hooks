@@ -105,7 +105,7 @@ isWinner(itemOrderArray) {
     render() {
         return (
             <>
-          <SortableGrid
+          {/* <SortableGrid
               blockTransitionDuration={50}
               activeBlockCenteringDuration={200}
               itemsPerRow={3}
@@ -118,8 +118,8 @@ isWinner(itemOrderArray) {
                       <View key={item.id}  onTap={() => console.log(item.id) }>
                           <Image
                               style={{height:138,width:width/3}}
-                              source={{ uri:item.image }} />
-       </View>
+                              source={{ uri:item.image }} /> */}
+       {/* </View> */}
 
      )
    }

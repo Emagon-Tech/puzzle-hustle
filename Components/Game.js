@@ -9,31 +9,24 @@ import {
   ImageBackground,
 } from "react-native";
 
-import SortableGrid from "react-native-sortable-grid";
-
 import Timer from "./Timer";
 
 let stepsCount = 0;
 let timeGiven = 0;
 let gridsize = 0;
-let blockheight = 0;
-let shuffledimages = [];
 const Game = ({ route, navigation }) => {
   const { level } = route.params;
   switch (level) {
     case "Easy":
       gridsize = 3;
-      blockheight = 138;
       timeGiven = 10;
       break;
     case "Medium":
       gridsize = 4;
-      blockheight = 104;
       timeGiven = 20;
       break;
     case "Hard":
       gridsize = 5;
-      blockheight = 84;
       timeGiven = 25;
       break;
 
@@ -42,9 +35,10 @@ const Game = ({ route, navigation }) => {
       break;
   }
   useEffect(() => {
-    console.log("in useEffect()");
-    // fetching1();
+    // fetchSplitImages();
   }, []);
+
+  const { goBack } = navigation;
 
   let range = [...Array(gridsize * gridsize).keys()];
 
@@ -64,18 +58,12 @@ const Game = ({ route, navigation }) => {
     return images;
   };
 
-  const fetching1 = async () => {
-    console.log("Get Image Splits called");
+  const fetchSplitImages = async () => {
     await fetch("http://192.168.0.231:5000/image_slicer")
       .then((response) => response.json())
       .then((res) => {
-        console.log("===============================================");
-        console.log("===============================================");
-        console.log("===============================================");
-
         res.datalist.forEach((element, index) => {
           element.id = index;
-          console.log(element.width, element.height, index, element.id);
         });
 
         setimg(res.datalist);
@@ -85,8 +73,6 @@ const Game = ({ route, navigation }) => {
 
   const isSolved = (itemOrderArray) => {
     let bo = true;
-    console.log("img", img);
-    console.log("Iorder", itemOrderArray);
     for (let i = 0; i < itemOrderArray.length; i++) {
       if (!(i == img[itemOrderArray[i]["key"]]["id"])) {
         bo = false;
@@ -104,7 +90,7 @@ const Game = ({ route, navigation }) => {
           {
             text: "Yes",
             onPress: () => {
-              fetching1();
+              fetchSplitImages();
             },
           },
           {
@@ -193,35 +179,10 @@ const Game = ({ route, navigation }) => {
         }}
         source={require("../img/background.png")}
       >
-        <Tiles rows={3} cols={3} hole={5} width={300} height={300} />
-        {/* <SortableGrid
-          blockTransitionDuration={50}
-          activeBlockCenteringDuration={200}
-          itemsPerRow={gridsize}
-          dragActivationTreshold={50}
-          onDragRelease={(itemOrder) => {
-            stepsCount = stepsCount + 1;
-            isWinner(itemOrder["itemOrder"]);
-          }}
-          onDragStart={() => console.log("Some block is being dragged now!")}
-        >
-          {shuffledimages.map((item, index) => (
-            <View key={index} onTap={() => console.log(index)}>
-              <Image
-                style={{ height: blockheight, width: width / gridsize }}
-                source={{ uri: item.dataURI }}
-              />
-            </View>
-          ))}
-        </SortableGrid> */}
-        <Timer handlefinish={setreset} timegiven={timeGiven} />
+        <Tiles rows={3} cols={3} width={300} height={300} onBack={goBack} />
       </ImageBackground>
     </>
   );
 };
 
 export default Game;
-
-//height:84, width: width / gs ==> grid size:5
-//height:138, width: width / 3 ==> gs:3
-//height:103, width: width / gridsize ==> gs:4

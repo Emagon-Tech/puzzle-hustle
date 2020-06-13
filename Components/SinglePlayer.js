@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,6 +15,7 @@ const SinglePlayerMode = ({ navigation }) => {
   const setSelectedOption = (selectedOption) => {
     setValue(selectedOption);
   };
+  useEffect(() => {});
   return (
     <ImageBackground
       style={{
@@ -24,15 +25,8 @@ const SinglePlayerMode = ({ navigation }) => {
       }}
       source={require("../img/background.png")}
     >
-      <View
-        style={{
-          alignContent: "center",
-          justifyContent: "center",
-          marginTop: 400,
-          marginLeft: 30,
-        }}
-      >
-        <Text style={{ marginLeft: 70, fontSize: 20, marginBottom: 20 }}>
+      <View style={styles.container}>
+        <Text style={{ fontSize: 20, marginBottom: 20, color: "white" }}>
           Select Difficulty Level
         </Text>
         <SegmentedControls
@@ -44,10 +38,8 @@ const SinglePlayerMode = ({ navigation }) => {
             width: 350,
           }}
         />
-      </View>
-      <View style={{ alignContent: "flex-end" }}>
         <TouchableOpacity
-          style={styles.button1}
+          style={styles.playButton}
           onPress={() => navigation.navigate("GameScreen", { level: value })}
         >
           <Text
@@ -58,9 +50,7 @@ const SinglePlayerMode = ({ navigation }) => {
             Play
           </Text>
         </TouchableOpacity>
-      </View>
-      <View style={{ alignContent: "flex-end" }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.button1}
           onPress={() => navigation.navigate("Models")}
         >
@@ -71,17 +61,18 @@ const SinglePlayerMode = ({ navigation }) => {
           >
             Modal
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
-      <Text style>{value}</Text>
     </ImageBackground>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "space-evenly",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  button1: {
+  playButton: {
     backgroundColor: "white",
     height: 70,
     width: 200,
@@ -90,38 +81,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: 5,
     marginTop: 20,
-    marginLeft: 100,
     shadowOffset: { width: 5, height: 2 },
     shadowColor: "black",
     shadowOpacity: 0.8,
     elevation: 4,
-  },
-  radioText: {
-    marginRight: 35,
-    fontSize: 20,
-    color: "#ffffff",
-    fontWeight: "500",
-  },
-  radioCircle: {
-    height: 30,
-    width: 30,
-    borderRadius: 100,
-    borderWidth: 2,
-    borderColor: "#000000",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  selectedRb: {
-    width: 15,
-    height: 15,
-    borderRadius: 50,
-    backgroundColor: "#3740ff",
-  },
-  result: {
-    marginTop: 20,
-    color: "white",
-    fontWeight: "600",
-    backgroundColor: "#F3FBFE",
   },
 });
 export default SinglePlayerMode;

@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
-  Button,
+  TouchableOpacity,
   Text,
   View,
   SafeAreaView,
   FlatList,
 } from "react-native";
-import _ from "lodash";
+import _, { stubArray } from "lodash";
 import { Tile } from "./Tile";
 
 const Tiles = (props) => {
-  const { rows, cols, hole, width, height } = props;
-  // const [numbers, setNumbers] = useState(_.range(1, rows * cols + 1));
+  const { rows, cols, width, height } = props;
   const [splitImages, setSplitImages] = useState([]);
+  const [shuffledImages, setShuffledImages] = useState([]);
+  const [hole, setHole] = useState();
   const pieceWidth = Math.round(width / cols);
   const pieceHeight = Math.round(height / rows);
-  // const solved = isSolved(numbers);
-  // console.log("SOLVED!!!!!!", solved);
+  const goBack = () => {
+    props.onBack("Game");
+  };
   useEffect(() => {
-    console.log("in useEffect()");
-    fetching1();
+    getImageFromServer();
   }, []);
 
-  const fetching1 = async () => {
+  const getImageFromServer = async () => {
     await fetch("http://192.168.0.231:5000/image_slicer")
       .then((response) => response.json())
       .then((res) => {
@@ -32,33 +33,27 @@ const Tiles = (props) => {
         });
 
         setSplitImages(res.datalist);
-        // shuffledimages = shufflingArray(res.datalist);
       });
   };
 
-  // const shuffleImages = (images) => {
-  //   let randindex = 2;
-  //   let tmp = {};
-  //   for (var i = images.length - 1; i > 0; i--) {
-  //     randindex = Math.floor(Math.random() * (i + 1));
-  //     tmp = images[i];
-  //     images[i] = images[randindex];
-  //     images[randindex] = tmp;
-  //   }
-  //   return images;
-  // };
+  // function shuffle(numbers, hole, rows, cols) {
+  //   do {
+  //     numbers = _.shuffle(_.without(numbers, hole)).concat(hole);
+  //   } while (isSolved(numbers) || !isSolvable(numbers, rows, cols));
+  //   return numbers;
+  // }
 
-  // const isSolved1 = (itemOrderArray) => {
-  //   let bo = true;
-  //   console.log("img", img);
-  //   console.log("Iorder", itemOrderArray);
-  //   for (let i = 0; i < itemOrderArray.length; i++) {
-  //     if (!(i == img[itemOrderArray[i]["key"]]["id"])) {
-  //       bo = false;
-  //     }
-  //   }
-  //   return bo;
-  // };
+  const isSolved = (images) => {
+    // for (let i = 0; i < images.length; i++) {
+    //   // if (i == images[i]["id"]) {
+    //   //   return true;
+    //   // }
+    //   // if (i == img[images[i]["key"]]["id"]) {
+    //   //   return true;
+    //   // }
+    // }
+    return false;
+  };
 
   // function isSolved(numbers) {
   //   for (let i = 0, l = numbers.length; i < l; i++) {
@@ -84,19 +79,10 @@ const Tiles = (props) => {
       col: index % cols,
     };
   }
-  // function shuffle(numbers, hole, rows, cols) {
-  //   do {
-  //     numbers = _.shuffle(_.without(numbers, hole)).concat(hole);
-  //   } while (isSolved(numbers) || !isSolvable(numbers, rows, cols));
-  //   return numbers;
-  // }
 
   function canSwap(src, dest, rows, cols) {
     const { row: srcRow, col: srcCol } = getMatrixPosition(src, rows, cols);
     const { row: destRow, col: destCol } = getMatrixPosition(dest, rows, cols);
-    console.log(srcRow, srcCol);
-    console.log(destRow, destCol);
-
     return Math.abs(srcRow - destRow) + Math.abs(srcCol - destCol) === 1;
   }
 
@@ -110,21 +96,34 @@ const Tiles = (props) => {
   }
 
   // const shuffleTiles = () => {
-  //   const shuffledNumbers = shuffle(numbers, hole, rows, cols);
-  //   setNumbers(shuffledNumbers);
+  //   console.log(hole, "--First hole before change");
+
+  //   console.log(hole, "--shuffleTiles");
+  //   shuffleImages(splitImages);
   // };
 
   const swapTiles = (tileIndex) => {
     const holeIndex = splitImages.findIndex((obj) => obj.id === hole);
-    console.log("HoleIndex", holeIndex, "----Tile index", tileIndex);
     if (canSwap(tileIndex, holeIndex, rows, cols)) {
-      console.log("can swap called");
       const newSplitImages = swap(splitImages, tileIndex, holeIndex);
-      newSplitImages.forEach((element) => {
-        console.log("------------", element.id);
-      });
       setSplitImages(newSplitImages);
     }
+  };
+
+  const shuffleImages = (images) => {
+    let randindex = 2;
+    let tmp = {};
+    for (var i = images.length - 2; i > 0; i--) {
+      randindex = Math.floor(Math.random() * (i + 1));
+      tmp = images[i];
+      images[i] = images[randindex];
+      images[randindex] = tmp;
+    }
+    if (isSolved(images)) {
+      // shuffleImages(images);
+    }
+    setShuffledImages(images);
+    setSplitImages(images);
   };
 
   const handleTileClick = (index) => {
@@ -132,7 +131,9 @@ const Tiles = (props) => {
   };
 
   const handleButtonClick = () => {
-    shuffleTiles();
+    // shuffleTiles();
+    setHole(rows * cols - 1);
+    shuffleImages(splitImages);
   };
 
   return (
@@ -142,19 +143,31 @@ const Tiles = (props) => {
         renderItem={({ item, index }) => (
           <Tile
             {...props}
-            index={item.id}
-            imageSrc={item.dataURI}
+            hole={hole}
+            index={index}
+            number={item}
             key={item.id}
             width={pieceWidth}
             height={pieceHeight}
             onClick={handleTileClick}
           />
         )}
-        extraData={splitImages}
+        extraData={shuffledImages}
         numColumns={cols}
         keyExtractor={(item, index) => item.id}
       />
-      <Button title="Start" onPress={() => handleButtonClick()} />
+
+      {shuffledImages.length <= 0 && (
+        <TouchableOpacity style={styles.playButton} onPress={handleButtonClick}>
+          <Text style={{ fontSize: 18 }}>Start</Text>
+        </TouchableOpacity>
+      )}
+
+      {shuffledImages.length > 0 && (
+        <TouchableOpacity style={styles.playButton} onPress={goBack}>
+          <Text style={{ fontSize: 18 }}>Exit Puzzle</Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 };
@@ -162,14 +175,30 @@ const Tiles = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    flexDirection: "column",
+    paddingTop: Platform.OS === "android" ? 50 : 0,
   },
   tilesStyle: {
     margin: "0 auto",
     padding: 5,
     position: "relative",
+  },
+  playButton: {
+    backgroundColor: "white",
+    height: 50,
+    width: 200,
+    color: "black",
+    borderRadius: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 5,
+    marginTop: 20,
+    shadowOffset: { width: 5, height: 2 },
+    shadowColor: "black",
+    shadowOpacity: 0.8,
+    elevation: 4,
   },
 });
 export default Tiles;

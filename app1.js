@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,8 +7,8 @@ import {
   PanResponder,
   Animated,
   Alert,
-} from 'react-native';
-import _ from 'lodash';
+} from "react-native";
+import _ from "lodash";
 
 class Draggable extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class Draggable extends Component {
       pan: new Animated.ValueXY(),
       scale: new Animated.Value(1),
       zIndex: 0,
-      backgroundColor: 'white',
+      backgroundColor: "white",
     };
   }
 
@@ -37,44 +37,52 @@ class Draggable extends Component {
       onMoveShouldSetPanResponderCapture: () => true,
 
       onPanResponderGrant: (e, gestureState) => {
-        console.log('moving', index);
-        this.state.pan.setOffset({ x: this.state.pan.x._value, y: this.state.pan.y._value });
+        this.state.pan.setOffset({
+          x: this.state.pan.x._value,
+          y: this.state.pan.y._value,
+        });
         this.state.pan.setValue({ x: 0, y: 0 });
 
-        Animated.spring(this.state.scale, { toValue: 0.75, friction: 3 }).start();
+        Animated.spring(this.state.scale, {
+          toValue: 0.75,
+          friction: 3,
+        }).start();
 
-        this.setState({ backgroundColor: 'deepskyblue', zIndex: 1 });
+        this.setState({ backgroundColor: "deepskyblue", zIndex: 1 });
       },
 
-      onPanResponderMove: Animated.event([null, { dx: this.state.pan.x, dy: this.state.pan.y }]),
+      onPanResponderMove: Animated.event([
+        null,
+        { dx: this.state.pan.x, dy: this.state.pan.y },
+      ]),
 
       onPanResponderRelease: (e, gesture) => {
         this.state.pan.flattenOffset();
         Animated.spring(this.state.scale, { toValue: 1 }).start();
-        this.setState({ backgroundColor: 'white', zIndex: 0 });
+        this.setState({ backgroundColor: "white", zIndex: 0 });
 
         let dropzone = inDropzone(gesture);
         if (dropzone) {
-          console.log('in dropzone', dropzone.index);
           // adjust into place
-          Animated.spring(this.state.pan, { toValue: {
-            x: dropzone.x - this.layout.x,
-            y: dropzone.y - this.layout.y,
-          } }).start();
+          Animated.spring(this.state.pan, {
+            toValue: {
+              x: dropzone.x - this.layout.x,
+              y: dropzone.y - this.layout.y,
+            },
+          }).start();
           if (index !== dropzone.index) {
             swapItems(index, dropzone.index);
           }
         }
         Animated.spring(this.state.pan, { toValue: { x: 0, y: 0 } }).start();
-      }
-
+      },
     });
   }
 
   render() {
     const { pan, scale, zIndex, backgroundColor } = this.state;
     const [translateX, translateY] = [pan.x, pan.y];
-    const rotate = '0deg';
+    const rotate = "0deg";
     const imageStyle = {
       transform: [{ translateX }, { translateY }, { rotate }, { scale }],
     };
@@ -82,13 +90,13 @@ class Draggable extends Component {
     return (
       <View
         style={[styles.dropzone, { zIndex }]}
-        onLayout={event => this.handleOnLayout(event)}
+        onLayout={(event) => this.handleOnLayout(event)}
       >
         <Animated.View
           {...this._panResponder.panHandlers}
           style={[imageStyle, styles.draggable, { backgroundColor }]}
         >
-                <Image style={styles.image} source={{ uri: this.props.item }} />
+          <Image style={styles.image} source={{ uri: this.props.item }} />
         </Animated.View>
       </View>
     );
@@ -100,18 +108,14 @@ const swap = (array, fromIndex, toIndex) => {
   newArray[fromIndex] = array[toIndex];
   newArray[toIndex] = array[fromIndex];
   return newArray;
-}
+};
 
 class Playground extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      items: [
-        '/img/hi_01_01.png',
-        '/img/hi_01_01.png',
-        '/img/hi_01_01.png',
-      ],
+      items: ["/img/hi_01_01.png", "/img/hi_01_01.png", "/img/hi_01_01.png"],
       dropzones: [],
       dropzoneLayouts: [],
     };
@@ -131,12 +135,16 @@ class Playground extends Component {
   inDropzone(gesture) {
     const { dropzoneLayouts } = this.state;
     // HACK: with the way they are added, sometimes the layouts end up out of order, so we need to sort by y,x (x,y doesn't work)
-    const sortedDropzoneLayouts = _.sortBy(dropzoneLayouts, ['y', 'x']);
+    const sortedDropzoneLayouts = _.sortBy(dropzoneLayouts, ["y", "x"]);
     let inDropzone = false;
 
     sortedDropzoneLayouts.forEach((dropzone, index) => {
-      const inX = gesture.moveX > dropzone.x && gesture.moveX < dropzone.x + dropzone.width;
-      const inY = gesture.moveY > dropzone.y && gesture.moveY < dropzone.y + dropzone.height;
+      const inX =
+        gesture.moveX > dropzone.x &&
+        gesture.moveX < dropzone.x + dropzone.width;
+      const inY =
+        gesture.moveY > dropzone.y &&
+        gesture.moveY < dropzone.y + dropzone.height;
       if (inX && inY) {
         inDropzone = dropzone;
         inDropzone.index = index;
@@ -146,7 +154,6 @@ class Playground extends Component {
   }
 
   swapItems(fromIndex, toIndex) {
-    console.log('swapping', fromIndex, '<->', toIndex);
     const { items, dropzones } = this.state;
     this.setState({
       items: swap(items, fromIndex, toIndex),
@@ -155,18 +162,18 @@ class Playground extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <View style={styles.container}>
-        {this.state.items.map((item, index) =>
-          <Draggable key={index}
+        {this.state.items.map((item, index) => (
+          <Draggable
+            key={index}
             item={item}
             index={index}
             addDropzone={this.addDropzone.bind(this)}
             inDropzone={this.inDropzone.bind(this)}
             swapItems={this.swapItems.bind(this)}
           />
-        )}
+        ))}
       </View>
     );
   }
@@ -176,34 +183,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 60,
-    backgroundColor: 'orange',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    backgroundColor: "orange",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   dropzone: {
     // margin: 5,
     zIndex: -1,
     width: 106,
     height: 106,
-    borderColor: 'green',
+    borderColor: "green",
     borderWidth: 3,
-    backgroundColor: 'lightgreen',
+    backgroundColor: "lightgreen",
   },
   draggable: {
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
     width: 100,
     height: 100,
     borderWidth: 1,
-    borderColor: 'black'
+    borderColor: "black",
   },
   image: {
     width: 75,
-    height: 75
-  }
+    height: 75,
+  },
 });
 
 export default Playground;

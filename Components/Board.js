@@ -1,14 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-  Dimensions,
-  Alert,
-  Text,
-  ImageBackground,
-  TouchableHighlight,
-} from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 import Game from "./Game";
 

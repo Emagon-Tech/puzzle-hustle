@@ -29,11 +29,16 @@ function MyStack() {
           name="GameScreen"
           component={Game}
           options={{
-            title: "",
             headerShown: false,
           }}
         />
-        <Stack.Screen name="SinglePlayerScreen" component={SinglePlayerMode} />
+        <Stack.Screen
+          name="SinglePlayerScreen"
+          options={{
+            headerShown: false,
+          }}
+          component={SinglePlayerMode}
+        />
         <Stack.Screen name="Models" component={Modelnamed} />
         <Stack.Screen name="BoardScreen" component={BoardScr} />
       </Stack.Navigator>

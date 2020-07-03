@@ -44,13 +44,15 @@ export const Tile = (props) => {
     <Animated.View style={{ transform: pan.getTranslateTransform() }}>
       <TouchableWithoutFeedback onPress={handleClick}>
         <View style={style}>
-          <Image
-            style={{ height: height, width: width, position: "absolute" }}
-            source={{
-              uri: number.dataURI,
-              cache: "force-cache",
-            }}
-          />
+          {number.dataURI && (
+            <Image
+              style={{ height: height, width: width, position: "absolute" }}
+              source={{
+                uri: number.dataURI,
+                cache: "force-cache",
+              }}
+            />
+          )}
           {shownums && (
             <View
               style={{

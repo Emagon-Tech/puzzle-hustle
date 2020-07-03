@@ -20,7 +20,7 @@ import ModalHint from "./HintModal";
 
 import { Stopwatch } from "react-native-stopwatch-timer";
 
-const { width, height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("window");
 
 var steps = 0;
 var hintimage = [];

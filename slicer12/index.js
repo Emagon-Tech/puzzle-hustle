@@ -15,7 +15,11 @@ const urbandata = JSON.parse(fs.readFileSync("./urban.json", "utf8"));
 const carsdata = JSON.parse(fs.readFileSync("./cars.json", "utf8"));
 const catsdata = JSON.parse(fs.readFileSync("./cats.json", "utf8"));
 const covid19data = JSON.parse(fs.readFileSync("./covid19.json", "utf8"));
-
+const cats = {
+  "3": { data: [] },
+  "4": {},
+  "5": {},
+};
 const categorydata = {
   sports: sportsdata,
   dogs: dogsdata,

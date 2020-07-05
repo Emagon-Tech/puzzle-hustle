@@ -281,7 +281,7 @@ const Home = ({ navigation }) => {
       >
         <TouchableOpacity
           style={styles.button1}
-          onPress={() => navigation.navigate("SinglePlayerScreen")}
+          onPress={() => navigation.navigate("imagePicker")}
         >
           <Text
             style={{

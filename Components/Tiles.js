@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Dimensions,
 } from "react-native";
+import LottieView from "lottie-react-native";
 
 import _, { stubArray } from "lodash";
 
@@ -27,21 +28,17 @@ var hintimage = [];
 const Tiles = (props) => {
   const { rows, cols, category } = props;
   const [splitImages, setSplitImages] = useState([]);
-  const [shuffledImages, setShuffledImages] = useState([]);
   const [hole, setHole] = useState();
   const [shownums, setshownums] = useState(false);
   const [solved, setsolved] = useState(false);
   const [showstart, setshowstart] = useState(false);
   const [imgmodal, setimgmodal] = useState(false);
-  const [imgurl, setimgurl] = useState("");
   const [stopwatchStart, setstopwatchStart] = useState(false);
   const [stopwatchReset, setstopwatchReset] = useState(false);
-  const [loader, setloader] = useState(true);
   const pieceWidth = width / cols;
   const pieceHeight = width / rows;
   const N = rows;
 
-  console.log("-----------------", pieceWidth * rows);
   const goBack = () => {
     props.onBack("Game");
   };
@@ -52,7 +49,6 @@ const Tiles = (props) => {
   //TODO:Get image from server with gridsize for splitting
   //https://slicer12.herokuapp.com
   const getImageFromServer = async () => {
-    setloader(true);
     await fetch(
       `https://slicer12.herokuapp.com/image_slicer?gs=${rows}&cat=${category}`
     )
@@ -66,7 +62,9 @@ const Tiles = (props) => {
         hintimage = res.datalist.slice();
         setshowstart(true);
         steps = 0;
-        setloader(false);
+      })
+      .catch((error) => {
+        console.log("Unable to fetch images------------\n\n\n", error);
       });
   };
 
@@ -175,7 +173,6 @@ const Tiles = (props) => {
     } while (isSolved(images) || !isSolvable(images));
     //console.log(images);
 
-    setShuffledImages(images);
     setSplitImages(images);
   };
 
@@ -200,7 +197,6 @@ const Tiles = (props) => {
 
   return (
     <>
-      {loader && <ModalLoading />}
       {imgmodal && (
         <ModalHint gs={rows} imgurl={hintimage} showmodal={hideimgmodal} />
       )}
@@ -243,7 +239,28 @@ const Tiles = (props) => {
               key={index}
             />
           ))}
+          {splitImages.length == 0 && (
+            <>
+              <Text style={{ fontWeight: "bold" }}>
+                Fetching your puzzle ...
+              </Text>
+
+              <View
+                style={{
+                  height: height / 3,
+                  width: width / 3,
+                }}
+              >
+                <LottieView
+                  source={require("../assets/dog-loading.json")}
+                  autoPlay
+                  loop
+                />
+              </View>
+            </>
+          )}
         </View>
+
         <View
           style={{
             width: "100%",
@@ -275,14 +292,6 @@ const Tiles = (props) => {
               <Text style={{ fontSize: 18 }}>Start</Text>
             </TouchableOpacity>
           )}
-          {/* {shuffledImages.length > 0 && (
-          <TouchableOpacity
-            style={[styles.playButton, { marginBottom: 50 }]}
-            onPress={goBack}
-          >
-            <Text style={{ fontSize: 18 }}>Exit Puzzle</Text>
-          </TouchableOpacity>
-        )} */}
         </View>
       </SafeAreaView>
     </>

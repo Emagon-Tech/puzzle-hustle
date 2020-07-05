@@ -9,8 +9,6 @@ import {
 
 import { SegmentedControls } from "react-native-radio-buttons";
 
-import CategoriesModalComponent from "./CategoriesModal";
-
 const options = ["Easy", "Medium", "Hard"];
 
 const SinglePlayerMode = ({ navigation }) => {
@@ -46,9 +44,7 @@ const SinglePlayerMode = ({ navigation }) => {
         />
         <TouchableOpacity
           style={styles.playButton}
-          onPress={() =>
-            navigation.navigate("categoryselection", { level: value })
-          }
+          onPress={() => navigation.navigate("imagePicker")}
         >
           {/*setshowcatmodal(true)}>*/}
           <Text

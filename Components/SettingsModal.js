@@ -12,10 +12,10 @@ import {
   Switch,
 } from "react-native";
 import LottieView from "lottie-react-native";
-
+import Icon from "react-native-vector-icons/FontAwesome";
+Icon.loadFont();
 const { width, height } = Dimensions.get("window");
 export default SettingsModalComponent = (props) => {
-  console.log("in settings modal");
   const { hide } = props;
   const { lobby } = props;
   const [modalVisible, setModalVisible] = useState(true);
@@ -61,7 +61,7 @@ export default SettingsModalComponent = (props) => {
     },
     textStyle: {
       color: "white",
-      fontWeight: "bold",
+
       textAlign: "center",
     },
     modalText: {
@@ -79,33 +79,6 @@ export default SettingsModalComponent = (props) => {
         Alert.alert("Modal has been closed.");
       }}
     >
-      <View
-        style={{
-          backgroundColor: "red",
-          height: 40,
-          width: 40,
-          borderRadius: 20,
-          marginTop: height / 4 - 20,
-          marginLeft: width - 40,
-          zIndex: 1,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            hide();
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              textAlign: "center",
-              fontSize: 25,
-            }}
-          >
-            X
-          </Text>
-        </TouchableOpacity>
-      </View>
       <View style={styles.modalView}>
         <View style={{ flexDirection: "row" }}>
           <View
@@ -131,6 +104,17 @@ export default SettingsModalComponent = (props) => {
             }}
           >
             <Text style={{ fontSize: 30, textAlign: "center" }}>Settings</Text>
+            <Icon
+              name="close"
+              style={{
+                position: "absolute",
+                right: 0,
+                top: 0,
+                padding: 10,
+                color: "red",
+              }}
+              onPress={() => hide()}
+            />
           </View>
         </View>
         <View
@@ -209,7 +193,7 @@ export default SettingsModalComponent = (props) => {
             <Text
               style={{
                 textAlign: "center",
-                fontWeight: "bold",
+
                 margin: 10,
               }}
             >
@@ -232,7 +216,6 @@ export default SettingsModalComponent = (props) => {
               style={{
                 textAlign: "center",
                 margin: 10,
-                fontWeight: "bold",
               }}
             >
               Resume

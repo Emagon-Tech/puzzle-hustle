@@ -10,7 +10,7 @@ import BoardScr from "./Components/Board";
 import { View, Button } from "react-native";
 
 import SettingsModalView from "./Components/SettingsModal";
-import CategoriesSelectionComponent from "./Components/CategorySelection";
+import ImagePicker from "./Components/ImagePicker";
 var navigator;
 const Stack = createStackNavigator();
 const SplashScreen = ({ navigation }) => {
@@ -71,7 +71,6 @@ function MyStack() {
               headerRight: () => (
                 <Button
                   onPress={() => {
-                    console.log("in button onPress");
                     hidemodal();
                   }}
                   title="|||"
@@ -81,15 +80,8 @@ function MyStack() {
             }}
           />
           <Stack.Screen
-            name="SinglePlayerScreen"
-            options={{
-              headerShown: false,
-            }}
-            component={SinglePlayerMode}
-          />
-          <Stack.Screen
-            name="categoryselection"
-            component={CategoriesSelectionComponent}
+            name="imagePicker"
+            component={ImagePicker}
             options={{
               title: "",
               headerStyle: {

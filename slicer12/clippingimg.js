@@ -190,7 +190,6 @@ app.get("/image_slicer", (req, res) => {
     Math.random() * categorydata[queryData.cat].urls.length
   );
   source = categorydata[queryData.cat].urls[rand];
-  console.log("Slicer called");
 
   let f = slicecoordinates(queryData);
   console.log();
@@ -208,9 +207,7 @@ app.get("/image_slicer", (req, res) => {
       saveToDataUrl: true,
     },
     function (dataUrlList) {
-      console.log("IMAGE SLICER OUTPUT------", dataUrlList.length);
       res.send({ datalist: dataUrlList });
-      console.log("the source image has been sliced into sections!");
     }
   );
 });

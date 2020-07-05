@@ -189,7 +189,7 @@ export default CategoriesSelectionComponent = ({ route, navigation }) => {
         <ScrollView
           horizontal={true}
           centerContent={true}
-          onScroll={(event) => console.log(event.nativeEvent.contentOffset.x)}
+          //onScroll={(event) => console.log(event.nativeEvent.contentOffset.x)}
         >
           {catarray.map((item) => (
             <Card key={item.id} uriimg={item.uri} title={item.title} />

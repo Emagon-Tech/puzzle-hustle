@@ -8,6 +8,8 @@ import {
   Dimensions,
 } from "react-native";
 
+import { Transitioning, Transition } from "react-native-reanimated";
+
 import _, { stubArray } from "lodash";
 
 import { Tile } from "./Tile";
@@ -21,13 +23,29 @@ import ModalHint from "./HintModal";
 import { Stopwatch } from "react-native-stopwatch-timer";
 
 const { width, height } = Dimensions.get("window");
-
+var jh = 0;
 var steps = 0;
 var hintimage = [];
 const Tiles = (props) => {
+  const transition = (
+    <Transition.Together>
+      <Transition.Change interpolation="linear" durationMs={1000} />
+    </Transition.Together>
+  );
+  useEffect(() => {
+    //ref.current.animateNextTransition();
+    jh = jh + 1;
+    console.log("in useeffect() empty", jh);
+  });
+  useEffect(() => {
+    console.log("in useeffect server call");
+    getImageFromServer();
+  }, []);
+
+  const ref = React.useRef();
+
   const { rows, cols, category } = props;
-  const [splitImages, setSplitImages] = useState([]);
-  const [shuffledImages, setShuffledImages] = useState([]);
+  let [splitImages, setSplitImages] = useState([]);
   const [hole, setHole] = useState();
   const [shownums, setshownums] = useState(false);
   const [solved, setsolved] = useState(false);
@@ -45,9 +63,6 @@ const Tiles = (props) => {
   const goBack = () => {
     props.onBack("Game");
   };
-  useEffect(() => {
-    getImageFromServer();
-  }, []);
 
   //TODO:Get image from server with gridsize for splitting
   //https://slicer12.herokuapp.com
@@ -163,20 +178,19 @@ const Tiles = (props) => {
 
   //Shuffle the images array
   const shuffleImages = (images) => {
+    let images1 = images.slice();
     let randindex = 2;
     let tmp = {};
     do {
       for (var i = images.length - 2; i > 0; i--) {
         randindex = Math.floor(Math.random() * (i + 1));
-        tmp = images[i];
-        images[i] = images[randindex];
-        images[randindex] = tmp;
+        tmp = images1[i];
+        images1[i] = images1[randindex];
+        images1[randindex] = tmp;
       }
-    } while (isSolved(images) || !isSolvable(images));
-    //console.log(images);
+    } while (isSolved(images1) || !isSolvable(images1));
 
-    setShuffledImages(images);
-    setSplitImages(images);
+    setSplitImages(images1);
   };
 
   const handleTileClick = (index) => {
@@ -211,7 +225,7 @@ const Tiles = (props) => {
           nextpuzzle={getImageFromServer}
         />
       )}
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <View
           style={{
             flexDirection: "row",
@@ -229,10 +243,9 @@ const Tiles = (props) => {
             <Stopwatch secs start={stopwatchStart} reset={stopwatchReset} />
           </View>
         </View>
-        <View style={gridview}>
+        <Transitioning.View ref={ref} transition={transition} style={gridview}>
           {splitImages.map((item, index) => (
             <Tile
-              {...props}
               hole={hole}
               index={index}
               number={item}
@@ -243,7 +256,7 @@ const Tiles = (props) => {
               key={index}
             />
           ))}
-        </View>
+        </Transitioning.View>
         <View
           style={{
             width: "100%",
@@ -275,16 +288,8 @@ const Tiles = (props) => {
               <Text style={{ fontSize: 18 }}>Start</Text>
             </TouchableOpacity>
           )}
-          {/* {shuffledImages.length > 0 && (
-          <TouchableOpacity
-            style={[styles.playButton, { marginBottom: 50 }]}
-            onPress={goBack}
-          >
-            <Text style={{ fontSize: 18 }}>Exit Puzzle</Text>
-          </TouchableOpacity>
-        )} */}
         </View>
-      </SafeAreaView>
+      </View>
     </>
   );
 };

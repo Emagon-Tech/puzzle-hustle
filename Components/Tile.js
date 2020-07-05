@@ -41,12 +41,16 @@ export const Tile = (props) => {
     borderwidth: 2,
   };
   return (
-    <Animated.View style={{ transform: pan.getTranslateTransform() }}>
+    <Animated.View>
       <TouchableWithoutFeedback onPress={handleClick}>
-        <View style={style}>
+        <Animated.View style={style}>
           {number.dataURI && (
-            <Image
-              style={{ height: height, width: width, position: "absolute" }}
+            <Animated.Image
+              style={{
+                flex: 1,
+                height: height,
+                width: width,
+              }}
               source={{
                 uri: number.dataURI,
                 cache: "force-cache",
@@ -54,7 +58,7 @@ export const Tile = (props) => {
             />
           )}
           {shownums && (
-            <View
+            <Animated.View
               style={{
                 height: 20,
                 width: 20,
@@ -65,7 +69,7 @@ export const Tile = (props) => {
                 opacity: 0.8,
               }}
             >
-              <Text
+              <Animated.Text
                 style={{
                   fontSize: 10,
                   fontWeight: "bold",
@@ -73,11 +77,11 @@ export const Tile = (props) => {
                 }}
               >
                 {number.id}
-              </Text>
-            </View>
+              </Animated.Text>
+            </Animated.View>
           )}
           {/* </Image> */}
-        </View>
+        </Animated.View>
       </TouchableWithoutFeedback>
     </Animated.View>
   );

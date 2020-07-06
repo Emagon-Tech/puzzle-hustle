@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -19,7 +19,9 @@ import ModalLoading from "./LoadingModal";
 
 import ModalHint from "./HintModal";
 
-import { Stopwatch } from "react-native-stopwatch-timer";
+import Stopwatch from "./StopWatch";
+
+import { Transitioning, Transition } from "react-native-reanimated";
 
 const { width, height } = Dimensions.get("window");
 
@@ -35,10 +37,16 @@ const Tiles = (props) => {
   const [imgmodal, setimgmodal] = useState(false);
   const [stopwatchStart, setstopwatchStart] = useState(false);
   const [stopwatchReset, setstopwatchReset] = useState(false);
+  const [restart, setrestart] = useState(false);
   const pieceWidth = width / cols;
   const pieceHeight = width / rows;
   const N = rows;
-
+  const ref = useRef();
+  const transition = (
+    <Transition.Together>
+      <Transition.Change interpolation="linear" durationMs={1000} />
+    </Transition.Together>
+  );
   const goBack = () => {
     props.onBack("Game");
   };
@@ -151,6 +159,7 @@ const Tiles = (props) => {
       const newSplitImages = swap(splitImages, tileIndex, holeIndex);
       setSplitImages(newSplitImages);
       if (isSolved(newSplitImages)) {
+        setrestart(false);
         setsolved(true);
         setHole(999);
         setstopwatchStart(false);
@@ -163,17 +172,18 @@ const Tiles = (props) => {
   const shuffleImages = (images) => {
     let randindex = 2;
     let tmp = {};
+    let images1 = splitImages.slice();
     do {
-      for (var i = images.length - 2; i > 0; i--) {
+      for (var i = images1.length - 2; i > 0; i--) {
         randindex = Math.floor(Math.random() * (i + 1));
-        tmp = images[i];
-        images[i] = images[randindex];
-        images[randindex] = tmp;
+        tmp = images1[i];
+        images1[i] = images1[randindex];
+        images1[randindex] = tmp;
       }
-    } while (isSolved(images) || !isSolvable(images));
+    } while (isSolved(images1) || !isSolvable(images1));
     //console.log(images);
-
-    setSplitImages(images);
+    ref.current.animateNextTransition();
+    setSplitImages(images1);
   };
 
   const handleTileClick = (index) => {
@@ -184,6 +194,11 @@ const Tiles = (props) => {
   const handleButtonClick = () => {
     setHole(rows * cols - 1);
     shuffleImages(splitImages);
+    if (restart == true) {
+      setstopwatchStart(false);
+      setstopwatchReset(true);
+      setstopwatchStart(true);
+    }
     setstopwatchReset(false);
     setstopwatchStart(true);
   };
@@ -225,10 +240,11 @@ const Tiles = (props) => {
             <Stopwatch secs start={stopwatchStart} reset={stopwatchReset} />
           </View>
         </View>
-        <View style={gridview}>
+        <Transitioning.View ref={ref} transition={transition} style={gridview}>
           {splitImages.map((item, index) => (
             <Tile
               {...props}
+              key={item.id}
               hole={hole}
               index={index}
               number={item}
@@ -236,7 +252,6 @@ const Tiles = (props) => {
               height={pieceHeight}
               onClick={handleTileClick}
               shownums={shownums}
-              key={index}
             />
           ))}
           {splitImages.length == 0 && (
@@ -259,7 +274,7 @@ const Tiles = (props) => {
               </View>
             </>
           )}
-        </View>
+        </Transitioning.View>
 
         <View
           style={{
@@ -287,9 +302,16 @@ const Tiles = (props) => {
           {showstart && (
             <TouchableOpacity
               style={styles.playButton}
-              onPress={handleButtonClick}
+              onPress={() => {
+                setrestart(true);
+                handleButtonClick();
+              }}
             >
-              <Text style={{ fontSize: 18 }}>Start</Text>
+              {restart ? (
+                <Text style={{ fontSize: 18 }}>Restart</Text>
+              ) : (
+                <Text style={{ fontSize: 18 }}>Start</Text>
+              )}
             </TouchableOpacity>
           )}
         </View>

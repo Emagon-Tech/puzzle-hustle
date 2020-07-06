@@ -9,70 +9,31 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Button,
+  Animated,
 } from "react-native";
 import { SegmentedControls } from "react-native-radio-buttons";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { catarray } from "./categoryimages";
 Icon.loadFont();
 const { width, height } = Dimensions.get("window");
 
 export default ImagePicker = ({ route, navigation }) => {
   const options = ["Easy", "Medium", "Hard"];
+
   const [difficultyLevel, setDifficultyLevel] = useState("Easy");
+
+  const [animeopacity, setanimeopactiyy] = useState(new Animated.Value(1));
+
   const setSelectedDifficultyLevel = (selectedOption) => {
+    console.log(selectedOption);
     setDifficultyLevel(selectedOption);
   };
-  const catarray = [
-    {
-      uri:
-        "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-      title: "dogs",
-      label: "Dogs",
-    },
-    ,
-    {
-      uri:
-        "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1113&q=80",
-      title: "urban",
-      label: "Cities",
-    },
-
-    {
-      uri:
-        "https://images.unsplash.com/photo-1567818735868-e71b99932e29?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-      label: "Cars",
-      title: "cars",
-    },
-    {
-      uri:
-        "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80",
-      title: "nature",
-      label: "Nature",
-    },
-    {
-      uri:
-        "https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=978&q=80",
-      title: "cats",
-      label: "Cats",
-    },
-    {
-      uri:
-        "https://images.unsplash.com/photo-1588683023217-97e48b7da1a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80",
-      title: "covid19",
-      label: "Covid 19",
-    },
-    {
-      uri:
-        "https://images.unsplash.com/photo-1480563597043-1c877e682fc7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
-      title: "sports",
-      label: "Sports",
-    },
-  ];
   const [imageUrl, setImageUrl] = useState(catarray[0].uri);
   const [title, setTitle] = useState(catarray[0].title);
   const [modalVisible, setModalVisible] = useState(false);
+
   function Card({ item }) {
     const { uri, title, label } = item;
     const cardstyle = {
@@ -105,6 +66,21 @@ export default ImagePicker = ({ route, navigation }) => {
     );
   }
 
+  const animateopacity = () => {
+    Animated.timing(animeopacity, {
+      toValue: 0,
+      timing: 1000,
+      useNativeDriver: false,
+    }).start(() => {
+      Animated.timing(animeopacity, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: false,
+      }).start(() => {
+        animateopacity();
+      });
+    });
+  };
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -155,7 +131,15 @@ export default ImagePicker = ({ route, navigation }) => {
         visible={modalVisible}
         presentationStyle="overFullScreen"
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
+          setModalVisible(false);
+          animeopacity.stopAnimation();
+        }}
+        onShow={() => {
+          setDifficultyLevel("Easy");
+        }}
+        onDismiss={() => {
+          console.log("in dismiss");
+          animeopacity.stopAnimation();
         }}
       >
         <View style={styles.modalContainer}>
@@ -163,7 +147,43 @@ export default ImagePicker = ({ route, navigation }) => {
             <Text style={{ fontSize: 20, marginBottom: 20, color: "white" }}>
               Select Difficulty Level
             </Text>
-
+            <View>
+              <Image
+                source={{ uri: imageUrl }}
+                style={{ height: 100, width: 100, marginBottom: 20 }}
+              />
+              {difficultyLevel === "Easy" ? (
+                <Animated.Image
+                  source={require("../assets/3x3.png")}
+                  style={{
+                    position: "absolute",
+                    height: 100,
+                    width: 100,
+                    opacity: animeopacity,
+                  }}
+                />
+              ) : difficultyLevel === "Medium" ? (
+                <Animated.Image
+                  source={require("../assets/4x4.png")}
+                  style={{
+                    position: "absolute",
+                    height: 100,
+                    width: 100,
+                    opacity: animeopacity,
+                  }}
+                />
+              ) : (
+                <Animated.Image
+                  source={require("../assets/5x5.png")}
+                  style={{
+                    position: "absolute",
+                    height: 100,
+                    width: 100,
+                    opacity: animeopacity,
+                  }}
+                />
+              )}
+            </View>
             <Icon
               name="close"
               style={{
@@ -231,6 +251,7 @@ export default ImagePicker = ({ route, navigation }) => {
           <TouchableWithoutFeedback
             onPress={() => {
               setModalVisible(!modalVisible);
+              animateopacity();
             }}
           >
             <View

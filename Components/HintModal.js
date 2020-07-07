@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -12,10 +12,8 @@ import Modal from "react-native-modal";
 
 const { width, height } = Dimensions.get("screen");
 const ModelHint = (props) => {
-  const { imgurl } = props;
-  const { showmodal } = props;
-  const { gs } = props;
-  const [modalVisible, setModalVisible] = useState(true);
+  const { imgurl, showmodal, gs } = props;
+  const [modalVisible] = useState(true);
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -87,8 +85,9 @@ const ModelHint = (props) => {
             </View>
           ) : (
             <View style={styles.gridview}>
-              {imgurl.map((item, index) => (
+              {imgurl.map((item) => (
                 <Image
+                  key={item.id}
                   source={{ uri: item.dataURI }}
                   style={{
                     height: 320 / gs,

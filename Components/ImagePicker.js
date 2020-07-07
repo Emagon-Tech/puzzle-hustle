@@ -17,8 +17,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { catarray } from "./categoryimages";
 Icon.loadFont();
+
 const { width, height } = Dimensions.get("window");
 
+// eslint-disable-next-line no-undef
 export default ImagePicker = ({ route, navigation }) => {
   const options = ["Easy", "Medium", "Hard"];
 
@@ -272,7 +274,7 @@ export default ImagePicker = ({ route, navigation }) => {
           horizontal={true}
           style={{ marginTop: "15%" }}
           centerContent={true}
-          onScroll={(event) => console.log(event.nativeEvent.contentOffset.x)}
+          //onScroll={(event) => console.log(event.nativeEvent.contentOffset.x)}
         >
           {catarray.map((item) => (
             <Card key={item.id} item={item} />

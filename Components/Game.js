@@ -1,15 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Tiles from "./Tiles";
-import {
-  StyleSheet,
-  View,
-  Image,
-  Dimensions,
-  Alert,
-  ImageBackground,
-} from "react-native";
-
-import Timer from "./Timer";
+import { ImageBackground } from "react-native";
 
 let timeGiven = 0;
 let gridsize = 0;

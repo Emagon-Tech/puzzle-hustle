@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -33,6 +33,10 @@ export default ImagePicker = ({ route, navigation }) => {
   const [imageUrl, setImageUrl] = useState(catarray[0].uri);
   const [title, setTitle] = useState(catarray[0].title);
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    animateopacity();
+  }, [difficultyLevel]);
 
   function Card({ item }) {
     const { uri, title, label } = item;
@@ -69,16 +73,14 @@ export default ImagePicker = ({ route, navigation }) => {
   const animateopacity = () => {
     Animated.timing(animeopacity, {
       toValue: 0,
-      timing: 1000,
+      timing: 2000,
       useNativeDriver: false,
     }).start(() => {
       Animated.timing(animeopacity, {
         toValue: 1,
-        duration: 1000,
+        duration: 2000,
         useNativeDriver: false,
-      }).start(() => {
-        animateopacity();
-      });
+      }).start(() => {});
     });
   };
   const styles = StyleSheet.create({
@@ -134,9 +136,7 @@ export default ImagePicker = ({ route, navigation }) => {
           setModalVisible(false);
           animeopacity.stopAnimation();
         }}
-        onShow={() => {
-          setDifficultyLevel("Easy");
-        }}
+        onShow={() => {}}
         onDismiss={() => {
           console.log("in dismiss");
           animeopacity.stopAnimation();

@@ -5,7 +5,7 @@ export const catarray = [
     title: "dogs",
     label: "Dogs",
   },
-  ,
+
   {
     uri:
       "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1113&q=80",

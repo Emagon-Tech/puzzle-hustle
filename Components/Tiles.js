@@ -9,13 +9,11 @@ import {
 } from "react-native";
 import LottieView from "lottie-react-native";
 
-import _, { stubArray } from "lodash";
+import _ from "lodash";
 
 import { Tile } from "./Tile";
 
 import ModalComponent from "./WinModalView";
-
-import ModalLoading from "./LoadingModal";
 
 import ModalHint from "./HintModal";
 
@@ -40,8 +38,11 @@ const Tiles = (props) => {
   const [restart, setrestart] = useState(false);
   const pieceWidth = width / cols;
   const pieceHeight = width / rows;
+
   const N = rows;
+
   const ref = useRef();
+
   const transition = (
     <Transition.Together>
       <Transition.Change interpolation="linear" durationMs={1000} />
@@ -52,6 +53,9 @@ const Tiles = (props) => {
   };
   useEffect(() => {
     getImageFromServer();
+    return () => {
+      steps = 0;
+    };
   }, []);
 
   //TODO:Get image from server with gridsize for splitting
@@ -100,6 +104,7 @@ const Tiles = (props) => {
           inv_count++;
       }
     }
+    console.log(inv_count);
     return inv_count;
   }
 
@@ -161,6 +166,7 @@ const Tiles = (props) => {
       if (isSolved(newSplitImages)) {
         setrestart(false);
         setsolved(true);
+        ref.current.animateNextTransition();
         setHole(999);
         setstopwatchStart(false);
         setstopwatchReset(true);
@@ -181,7 +187,9 @@ const Tiles = (props) => {
         images1[randindex] = tmp;
       }
     } while (isSolved(images1) || !isSolvable(images1));
-    //console.log(images);
+    images1.forEach((element) => {
+      console.log(element.id);
+    });
     ref.current.animateNextTransition();
     setSplitImages(images1);
   };
@@ -252,6 +260,7 @@ const Tiles = (props) => {
               height={pieceHeight}
               onClick={handleTileClick}
               shownums={shownums}
+              solved={solved}
             />
           ))}
           {splitImages.length == 0 && (

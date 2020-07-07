@@ -2,31 +2,13 @@ import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
-  BackgroundImage,
   Image,
   TouchableWithoutFeedback,
-  ImageBackground,
   Animated,
 } from "react-native";
 
 export const Tile = (props) => {
-  const [pan, setpan] = useState(new Animated.ValueXY(0));
   const { hole, number, index, width, height, shownums } = props;
-
-  function getMatrixPosition(index, rows, cols) {
-    return {
-      row: Math.floor(index / cols),
-      col: index % cols,
-    };
-  }
-
-  function getVisualPosition({ row, col }, width, height) {
-    return {
-      x: col * width,
-      y: row * height,
-    };
-  }
-
   const handleClick = () => {
     if (number.id !== hole) {
       props.onClick(index);
@@ -41,11 +23,11 @@ export const Tile = (props) => {
     borderwidth: 2,
   };
   return (
-    <Animated.View style={{ transform: pan.getTranslateTransform() }}>
+    <Animated.View>
       <TouchableWithoutFeedback onPress={handleClick}>
-        <View style={style}>
+        <Animated.View style={style}>
           {number.dataURI && (
-            <Image
+            <Animated.Image
               style={{ height: height, width: width, position: "absolute" }}
               source={{
                 uri: number.dataURI,
@@ -77,7 +59,7 @@ export const Tile = (props) => {
             </View>
           )}
           {/* </Image> */}
-        </View>
+        </Animated.View>
       </TouchableWithoutFeedback>
     </Animated.View>
   );

@@ -37,6 +37,7 @@ const Tiles = (props) => {
   const [imgmodal, setimgmodal] = useState(false);
   const [stopwatchStart, setstopwatchStart] = useState(false);
   const [stopwatchReset, setstopwatchReset] = useState(false);
+  const [disablebutton, setdisablebutton] = useState(false);
   const [restart, setrestart] = useState(false);
   const pieceWidth = width / cols;
   const pieceHeight = width / rows;
@@ -47,7 +48,7 @@ const Tiles = (props) => {
 
   const transition = (
     <Transition.Together>
-      <Transition.Change interpolation="linear" durationMs={1000} />
+      <Transition.Change interpolation="easeInOut" durationMs={1000} />
     </Transition.Together>
   );
   const goBack = () => {
@@ -105,7 +106,6 @@ const Tiles = (props) => {
     console.log("numbers lenght is ", numbers.length);
     for (let i = 1, l = N * N - 1; i <= l; i++) {
       for (let j = i + 1, m = l + 1; j <= m; j++) {
-        console.log("j is ", numbers[j - 1]["id"]);
         product *= (numbers[i - 1]["id"] - numbers[j - 1]["id"]) / (i - j);
       }
     }
@@ -152,40 +152,31 @@ const Tiles = (props) => {
         }, 1200);
         setHole(999);
         setstopwatchStart(false);
-        setstopwatchReset(true);
       }
     }
   };
 
   //Shuffle the images array
   const shuffleImages = (images) => {
+    setdisablebutton(true);
     let randindex = 2;
     let holehere = hole;
     let images1 = splitImages.slice();
+    let tmp;
     console.log("hole is ", hole);
     if (hole === undefined || hole === 999) {
       holehere = N * N - 1;
     }
     do {
-      //   for (var i = images1.length - 1; i > 0; i--) {
-      //     randindex = Math.floor(Math.random() * (i + 1));
-      //     tmp = images1[i];
-      //     images1[i] = images1[randindex];
-      //     images1[randindex] = tmp;
-
       randindex = images1.findIndex((obj) => obj.id === holehere);
-      console.log("randindex", randindex);
-      images1.splice(randindex, 1);
+      tmp = images1.splice(randindex, 1);
       images1 = _.shuffle(images1);
-      images1 = images1.concat(splitImages[randindex]);
-      console.log();
+      images1 = images1.concat(tmp);
     } while (isSolved(images1) || !isSolvable(images1));
-    console.log("lenght of images1", images1.length);
 
-    // images1.forEach((element) => {
-    //   console.log(element.id);
-    // });
-
+    setTimeout(() => {
+      setdisablebutton(false);
+    }, 1000);
     ref.current.animateNextTransition();
     setSplitImages(images1);
   };
@@ -198,15 +189,17 @@ const Tiles = (props) => {
 
   const handleButtonClick = () => {
     setHole(rows * cols - 1);
+    setrestart(true);
     steps = 0;
-    shuffleImages(splitImages);
-    if (restart == true) {
+    if (restart) {
       setstopwatchStart(false);
-      setstopwatchReset(true);
-      setstopwatchStart(true);
     }
-    setstopwatchReset(false);
-    setstopwatchStart(true);
+    setTimeout(() => {
+      setstopwatchStart(true);
+    }, 300);
+
+    console.log("start=true");
+    shuffleImages(splitImages);
   };
   const gridview = {
     flexWrap: "wrap",
@@ -232,8 +225,8 @@ const Tiles = (props) => {
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "space-between",
-            width: width,
+            justifyContent: "space-around",
+            width: "100%",
           }}
         >
           <Text style={{ color: "white", fontSize: 30 }}>Steps: {steps}</Text>
@@ -243,7 +236,7 @@ const Tiles = (props) => {
             }}
           >
             <Text style={{ color: "white", fontSize: 30 }}>Time:</Text>
-            <Stopwatch secs start={stopwatchStart} reset={stopwatchReset} />
+            <Stopwatch secs start={stopwatchStart} reset={!stopwatchStart} />
           </View>
         </View>
         <Transitioning.View ref={ref} transition={transition} style={gridview}>
@@ -310,8 +303,9 @@ const Tiles = (props) => {
             <TouchableOpacity
               style={styles.playButton}
               onPress={() => {
-                setrestart(true);
-                handleButtonClick();
+                if (!disablebutton) {
+                  handleButtonClick();
+                }
               }}
             >
               {restart ? (

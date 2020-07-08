@@ -35,9 +35,9 @@ export default ModalComponent = (props) => {
     modalView: {
       justifyContent: "center",
       alignItems: "center",
-      height: height * 0.4,
+      height: height * 0.5,
       margin: 20,
-      marginTop: height / 3,
+      marginTop: height / 3 - height * 0.1,
       backgroundColor: "black",
       borderRadius: 20,
       padding: 35,
@@ -100,6 +100,14 @@ export default ModalComponent = (props) => {
               speed={0.8}
             />
           </View>
+          <View style={{ height: 200, width: 200, position: "absolute" }}>
+            <LottieView
+              source={require("../assets/piggy-bank.json")}
+              autoPlay
+              loop={true}
+              speed={0.8}
+            />
+          </View>
           <View style={{ marginBottom: 10 }}>
             <Text style={{ fontSize: 30, color: "white" }}>
               Congratulations
@@ -110,7 +118,7 @@ export default ModalComponent = (props) => {
           </View>
           <View
             style={{
-              marginTop: 100,
+              marginTop: 150,
               width: "100%",
               flexDirection: "row",
               justifyContent: "space-between",

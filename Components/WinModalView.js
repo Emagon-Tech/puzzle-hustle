@@ -35,10 +35,10 @@ export default ModalComponent = (props) => {
     modalView: {
       justifyContent: "center",
       alignItems: "center",
-      height: height * 0.4,
+      height: height * 0.5,
       margin: 20,
-      marginTop: height / 3,
-      backgroundColor: "#ffffff",
+      marginTop: height / 3 - height * 0.1,
+      backgroundColor: "black",
       borderRadius: 20,
       padding: 35,
       alignItems: "center",
@@ -48,7 +48,7 @@ export default ModalComponent = (props) => {
         height: 2,
       },
       borderWidth: 20,
-      borderColor: "#ffffff",
+      borderColor: "#000000",
       shadowOpacity: 0.6,
       shadowRadius: 3.84,
       elevation: 5,
@@ -79,96 +79,113 @@ export default ModalComponent = (props) => {
       visible={modalVisible}
       presentationStyle={"overFullScreen"}
       onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
+        //Alert.alert("Modal has been closed.");
       }}
     >
-      <View style={styles.modalView}>
-        <View style={{ height: 500, width: 700, position: "absolute" }}>
-          <LottieView
-            source={require("../assets/coin.json")}
-            autoPlay
-            loop={true}
-            speed={0.8}
-          />
-        </View>
-        <View style={{ height: height, width: width, position: "absolute" }}>
-          <LottieView
-            source={require("../assets/confetti-cannon.json")}
-            autoPlay
-            loop={true}
-            speed={0.8}
-          />
-        </View>
-        <View style={{ marginBottom: 10 }}>
-          <Text style={{ fontSize: 30 }}>Congratulations</Text>
-          <Text style={{ fontSize: 25 }}>Coins Earned: 100</Text>
-        </View>
-        <View
-          style={{
-            marginTop: 100,
-            width: "100%",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignContent: "space-between",
-          }}
-        >
-          <TouchableWithoutFeedback
-            style={styles.modalButton}
-            onPress={() => {
-              setModalVisible(false);
-              back();
+      <View style={{ opacity: 0.9 }}>
+        <View style={styles.modalView}>
+          <View style={{ height: 500, width: 700, position: "absolute" }}>
+            <LottieView
+              source={require("../assets/coin.json")}
+              autoPlay
+              loop={false}
+              speed={0.8}
+            />
+          </View>
+          <View style={{ height: height, width: width, position: "absolute" }}>
+            <LottieView
+              source={require("../assets/confetti-cannon.json")}
+              autoPlay
+              loop={true}
+              speed={0.8}
+            />
+          </View>
+          <View style={{ height: 200, width: 200, position: "absolute" }}>
+            <LottieView
+              source={require("../assets/piggy-bank.json")}
+              autoPlay
+              loop={true}
+              speed={0.8}
+            />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <Text style={{ fontSize: 30, color: "white" }}>
+              Congratulations
+            </Text>
+            <Text style={{ fontSize: 25, color: "white" }}>
+              Coins Earned: 100
+            </Text>
+          </View>
+          <View
+            style={{
+              marginTop: 150,
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignContent: "space-between",
             }}
           >
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <Icon name="home" size={30} color="black" />
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontWeight: "bold",
-                }}
-              >
-                Home
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            style={styles.modalButton}
-            onPress={() => {
-              setModalVisible(false);
-              start();
-            }}
-          >
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <Icon name="repeat" size={30} color="black" />
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontWeight: "bold",
-                }}
-              >
-                Play Again
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            style={styles.modalButton}
-            onPress={() => {
-              setModalVisible(false);
-              nextpuzzle();
-            }}
-          >
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <Icon name="forward" size={30} color="black" />
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontWeight: "bold",
-                }}
-              >
-                Solve Next
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              style={styles.modalButton}
+              onPress={() => {
+                setModalVisible(false);
+                back();
+              }}
+            >
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Icon name="home" size={30} color="white" />
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    color: "white",
+                  }}
+                >
+                  Home
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              style={styles.modalButton}
+              onPress={() => {
+                setModalVisible(false);
+                start();
+              }}
+            >
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Icon name="repeat" size={30} color="white" />
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    color: "white",
+                  }}
+                >
+                  Play Again
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              style={styles.modalButton}
+              onPress={() => {
+                setModalVisible(false);
+                nextpuzzle();
+              }}
+            >
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Icon name="forward" size={30} color="white" />
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    color: "white",
+                  }}
+                >
+                  Solve Next
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
         </View>
       </View>
     </Modal>

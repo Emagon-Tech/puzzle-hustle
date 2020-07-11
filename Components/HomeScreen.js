@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,7 +6,11 @@ import {
   ImageBackground,
   Animated,
   View,
+  AppState,
 } from "react-native";
+import Video from "react-native-video";
+import { SoundContext } from "./Context";
+import Sound from "react-native-sound";
 
 var SPRING_CONFIG = { tension: 1, friction: 3 };
 
@@ -17,6 +21,47 @@ const Home = ({ navigation }) => {
   let panE = new Animated.ValueXY();
   let panR = new Animated.ValueXY();
   let togglebutton = new Animated.Value(0);
+  const { sound } = useContext(SoundContext);
+  sound.play();
+  sound.setNumberOfLoops(-1);
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+  useEffect(() => {
+    AppState.addEventListener("change", _handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener("change", _handleAppStateChange);
+    };
+  }, []);
+
+  const _handleAppStateChange = (nextAppState) => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      console.log("app is foreground");
+      //sound.play();
+      //sound.setNumberOfLoops(-1);
+      const lsound = new Sound(require("../assets/bg.mp3"), (error, sound) => {
+        if (error) {
+          alert("audio error" + error);
+          return;
+        }
+        console.log("sound  loaded");
+        sound.play();
+        sound.setNumberOfLoops(-1);
+      });
+    } else {
+      console.log("app is in background");
+      sound.release();
+      //   lsound.stop();
+    }
+
+    appState.current = nextAppState;
+    setAppStateVisible(appState.current);
+    // console.log("AppState", appState.current);
+  };
   const animate = () => {
     Animated.sequence([
       Animated.spring(panP, {
@@ -111,7 +156,6 @@ const Home = ({ navigation }) => {
       }),
     ]).start(() => animate());
   };
-
   useEffect(() => {
     animate();
   });

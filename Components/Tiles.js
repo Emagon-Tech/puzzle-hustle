@@ -7,9 +7,13 @@ import {
   SafeAreaView,
   Dimensions,
 } from "react-native";
+
 import LottieView from "lottie-react-native";
 
 import _ from "lodash";
+
+import Sound from "react-native-sound";
+Sound.setCategory("Playback");
 
 import { Tile } from "./Tile";
 
@@ -18,6 +22,8 @@ import ModalComponent from "./WinModalView";
 import ModalHint from "./HintModal";
 
 import Stopwatch from "./StopWatch";
+
+import { SoundContext } from "./Context";
 
 import { Transitioning, Transition } from "react-native-reanimated";
 
@@ -28,6 +34,7 @@ var steps;
 var hintimage = [];
 
 const Tiles = (props) => {
+  console.log("rendering component");
   const { rows, cols, category } = props;
   const [splitImages, setSplitImages] = useState([]);
   const [hole, setHole] = useState();
@@ -41,11 +48,9 @@ const Tiles = (props) => {
   const [restart, setrestart] = useState(false);
   const pieceWidth = width / cols;
   const pieceHeight = width / rows;
-
+  const { puzzlesound } = React.useContext(SoundContext);
   const N = rows;
-
   const ref = useRef();
-
   const transition = (
     <Transition.Together>
       <Transition.Change interpolation="easeInOut" durationMs={1000} />
@@ -59,6 +64,7 @@ const Tiles = (props) => {
     getImageFromServer();
     return () => {
       steps = 0;
+      puzzlesound.release();
     };
   }, []);
 
@@ -152,6 +158,7 @@ const Tiles = (props) => {
         }, 1200);
         setHole(999);
         setstopwatchStart(false);
+        puzzlesound.pause();
       }
     }
   };

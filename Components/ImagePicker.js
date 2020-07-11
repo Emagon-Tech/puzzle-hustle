@@ -11,11 +11,19 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native";
+
 import { SegmentedControls } from "react-native-radio-buttons";
+
 import { ScrollView } from "react-native-gesture-handler";
+
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import Icon from "react-native-vector-icons/FontAwesome";
+
+import { SoundContext } from "./Context";
+
 import { catarray } from "./categoryimages";
+
 Icon.loadFont();
 
 const { width, height } = Dimensions.get("window");
@@ -23,7 +31,7 @@ const { width, height } = Dimensions.get("window");
 // eslint-disable-next-line no-undef
 export default ImagePicker = ({ route, navigation }) => {
   const options = ["Easy", "Medium", "Hard"];
-
+  const { sound } = React.useContext(SoundContext);
   const [difficultyLevel, setDifficultyLevel] = useState("Easy");
 
   const [animeopacity, setanimeopactiyy] = useState(new Animated.Value(1));
@@ -212,6 +220,7 @@ export default ImagePicker = ({ route, navigation }) => {
               style={styles.playButton}
               onPress={() => {
                 setModalVisible(false);
+                sound.release();
                 navigation.navigate("GameScreen", {
                   level: difficultyLevel,
                   category: title,

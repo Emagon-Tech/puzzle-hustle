@@ -5,14 +5,24 @@ import Home from "./Components/HomeScreen";
 import Game from "./Components/Game";
 import LottieView from "lottie-react-native";
 import SinglePlayerMode from "./Components/SinglePlayer";
-
 import BoardScr from "./Components/Board";
 import { View, Button } from "react-native";
-
 import SettingsModalView from "./Components/SettingsModal";
 import ImagePicker from "./Components/ImagePicker";
+import { SoundProvider } from "./Components/Context";
 var navigator;
 const Stack = createStackNavigator();
+
+// var sound1 = new Sound(require("./assets/bg.mp3"), (error, sound) => {
+//   if (error) {
+//     alert("audio error" + error.message);
+//     return;
+//   }
+//   sound1.play(() => {
+//     sound1.play();
+//   });
+//});
+
 const SplashScreen = ({ navigation }) => {
   navigator = navigation;
   setTimeout(() => {
@@ -41,7 +51,7 @@ function MyStack() {
     setshowmodal(!showmodal);
   };
   return (
-    <>
+    <SoundProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="SplashScreen">
           <Stack.Screen
@@ -77,6 +87,7 @@ function MyStack() {
                   color="#00cc00"
                 />
               ),
+              headerShown: false,
             }}
           />
           <Stack.Screen
@@ -94,7 +105,7 @@ function MyStack() {
         </Stack.Navigator>
       </NavigationContainer>
       {showmodal && <SettingsModalView hide={hidemodal} lobby={navigator} />}
-    </>
+    </SoundProvider>
   );
 }
 export default MyStack;

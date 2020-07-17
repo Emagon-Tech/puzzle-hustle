@@ -8,8 +8,9 @@ import {
   View,
   AppState,
 } from "react-native";
-import Video from "react-native-video";
+
 import { SoundContext } from "./Context";
+
 import Sound from "react-native-sound";
 
 var SPRING_CONFIG = { tension: 1, friction: 3 };
@@ -21,12 +22,19 @@ const Home = ({ navigation }) => {
   let panE = new Animated.ValueXY();
   let panR = new Animated.ValueXY();
   let togglebutton = new Animated.Value(0);
-  const { sound } = useContext(SoundContext);
-  sound.play();
-  sound.setNumberOfLoops(-1);
+  let lsound, rsound;
+  const { state, dispatch } = useContext(SoundContext);
+  state.puzzlesound.play();
+  state.puzzlesound.setNumberOfLoops(-1);
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
-
+  //   useEffect(() => {
+  //     if (!state.intiles) {
+  //       state.puzzlesound.release();
+  //       state.sound.play();
+  //       state.sound.setNumberOfLoops(-1);
+  //     }
+  //   }, [state.intiles]);
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange);
 
@@ -36,26 +44,48 @@ const Home = ({ navigation }) => {
   }, []);
 
   const _handleAppStateChange = (nextAppState) => {
+    console.log("state of in tiles", state.intiles);
+    if (state.sound) {
+      console.log("releasing sound");
+      state.sound.release();
+    }
+    if (lsound) {
+      console.log("releasing lsound");
+      lsound.release();
+    }
+    if (state.puzzlesound) {
+      state.puzzlesound.release();
+    }
     if (
       appState.current.match(/inactive|background/) &&
       nextAppState === "active"
     ) {
       console.log("app is foreground");
-      //sound.play();
-      //sound.setNumberOfLoops(-1);
-      const lsound = new Sound(require("../assets/bg.mp3"), (error, sound) => {
-        if (error) {
-          alert("audio error" + error);
-          return;
-        }
-        console.log("sound  loaded");
-        sound.play();
-        sound.setNumberOfLoops(-1);
-      });
+      if (state.intiles) {
+        rsound = new Sound(require("../assets/puzzlebg.mp3"), (error) => {
+          if (error) {
+            alert("audio error" + error);
+            return;
+          }
+
+          rsound.play();
+          rsound.setNumberOfLoops(-1);
+          dispatch({ type: "update puzzlesound", payload: rsound });
+        });
+      } else {
+        lsound = new Sound(require("../assets/puzzlebg.mp3"), (error) => {
+          if (error) {
+            alert("audio error" + error);
+            return;
+          }
+          console.log("sound  loaded");
+          lsound.play();
+          lsound.setNumberOfLoops(-1);
+          dispatch({ type: "update bgsound", payload: lsound });
+        });
+      }
     } else {
       console.log("app is in background");
-      sound.release();
-      //   lsound.stop();
     }
 
     appState.current = nextAppState;

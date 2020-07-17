@@ -31,7 +31,7 @@ const { width, height } = Dimensions.get("window");
 // eslint-disable-next-line no-undef
 export default ImagePicker = ({ route, navigation }) => {
   const options = ["Easy", "Medium", "Hard"];
-  const { sound } = React.useContext(SoundContext);
+  const { state, dispatch } = React.useContext(SoundContext);
   const [difficultyLevel, setDifficultyLevel] = useState("Easy");
 
   const [animeopacity, setanimeopactiyy] = useState(new Animated.Value(1));
@@ -220,7 +220,7 @@ export default ImagePicker = ({ route, navigation }) => {
               style={styles.playButton}
               onPress={() => {
                 setModalVisible(false);
-                sound.release();
+                state.sound.release();
                 navigation.navigate("GameScreen", {
                   level: difficultyLevel,
                   category: title,

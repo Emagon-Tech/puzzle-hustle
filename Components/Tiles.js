@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+
 import {
   StyleSheet,
   TouchableOpacity,
@@ -6,6 +7,8 @@ import {
   View,
   SafeAreaView,
   Dimensions,
+  AppState,
+  Alert,
 } from "react-native";
 
 import LottieView from "lottie-react-native";
@@ -13,6 +16,7 @@ import LottieView from "lottie-react-native";
 import _ from "lodash";
 
 import Sound from "react-native-sound";
+
 Sound.setCategory("Playback");
 
 import { Tile } from "./Tile";
@@ -48,26 +52,38 @@ const Tiles = (props) => {
   const [restart, setrestart] = useState(false);
   const pieceWidth = width / cols;
   const pieceHeight = width / rows;
-  const { puzzlesound } = React.useContext(SoundContext);
+  const { state, dispatch } = React.useContext(SoundContext);
   const N = rows;
   const ref = useRef();
+  let lsound;
+
+  const appState = useRef(AppState.currentState);
+
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
   const transition = (
     <Transition.Together>
       <Transition.Change interpolation="easeInOut" durationMs={1000} />
     </Transition.Together>
   );
-  const goBack = () => {
-    props.onBack("Game");
-  };
 
+  state.puzzlesound.play();
+  state.puzzlesound.setNumberOfLoops(-1);
   useEffect(() => {
+    console.log("dispatching upadte inttiles");
+    dispatch({ type: "set intiles to true" });
     getImageFromServer();
     return () => {
       steps = 0;
-      puzzlesound.release();
+      if (lsound) {
+        lsound.release();
+      }
     };
   }, []);
 
+  const goBack = () => {
+    props.onBack("Game");
+  };
   //TODO:Get image from server with gridsize for splitting
 
   const getImageFromServer = async () => {
@@ -158,7 +174,12 @@ const Tiles = (props) => {
         }, 1200);
         setHole(999);
         setstopwatchStart(false);
-        puzzlesound.pause();
+        // if (state.puzzlesound) {
+        //   state.puzzlesound.release();
+        // }
+        // if (lsound) {
+        //   lsound.release();
+        // }
       }
     }
   };

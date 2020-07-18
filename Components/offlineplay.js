@@ -9,8 +9,9 @@ import {
   Dimensions,
   AppState,
   Alert,
+  ImageBackground,
 } from "react-native";
-
+const offlinejson = require("../assets/offlineimage.json");
 import LottieView from "lottie-react-native";
 
 import _ from "lodash";
@@ -21,7 +22,7 @@ Sound.setCategory("Playback");
 
 import { Tile } from "./Tile";
 
-import ModalComponent from "./WinModalView";
+import OfflineModalComponent from "./offlinewinmodal";
 
 import ModalHint from "./HintModal";
 
@@ -29,17 +30,35 @@ import Stopwatch from "./StopWatch";
 
 import { SoundContext } from "./Context";
 
-import { Transitioning, Transition, cos } from "react-native-reanimated";
+import { Transitioning, Transition } from "react-native-reanimated";
 
 const { width, height } = Dimensions.get("window");
-const offlinejson = require("../assets/offlineimage.json");
+
 var steps;
 
 var hintimage = [];
 
-const Tiles = (props) => {
+const OfflinePlay = ({ route, navigation }) => {
   console.log("rendering component");
-  const { rows, cols, category } = props;
+  const { level } = route.params;
+  let gridsize = 3;
+  switch (level) {
+    case "Easy":
+      gridsize = 3;
+      break;
+    case "Medium":
+      gridsize = 4;
+      break;
+    case "Hard":
+      gridsize = 5;
+      break;
+
+    default:
+      console.log("Some PRblem in route props" + level);
+      break;
+  }
+  const rows = gridsize;
+  const cols = gridsize;
   const [splitImages, setSplitImages] = useState([]);
   const [hole, setHole] = useState();
   const [shownums, setshownums] = useState(false);
@@ -47,19 +66,14 @@ const Tiles = (props) => {
   const [showstart, setshowstart] = useState(false);
   const [imgmodal, setimgmodal] = useState(false);
   const [stopwatchStart, setstopwatchStart] = useState(false);
-  const [stopwatchReset, setstopwatchReset] = useState(false);
   const [disablebutton, setdisablebutton] = useState(false);
   const [restart, setrestart] = useState(false);
-  const pieceWidth = width / cols;
-  const pieceHeight = width / rows;
+  const pieceWidth = 400 / gridsize;
+  const pieceHeight = 400 / gridsize;
   const { state, dispatch } = React.useContext(SoundContext);
   const N = rows;
   const ref = useRef();
   let lsound;
-
-  const appState = useRef(AppState.currentState);
-
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
   const transition = (
     <Transition.Together>
@@ -71,9 +85,15 @@ const Tiles = (props) => {
   state.puzzlesound.setNumberOfLoops(-1);
 
   useEffect(() => {
+    //const offlinejson = require("../assets/offlineimage.json");
+    console.log("in offline play file");
     console.log("dispatching upadte inttiles");
     dispatch({ type: "set intiles to true" });
     getImageFromServer();
+    setTimeout(() => {
+      console.log("timming out");
+    }, 1000);
+
     //setSplitImages(offlinejson[rows]["datalist"]);
     return () => {
       steps = 0;
@@ -84,31 +104,25 @@ const Tiles = (props) => {
   }, []);
 
   const goBack = () => {
-    props.onBack("Game");
+    navigation.navigate("Home");
   };
+
   //TODO:Get image from server with gridsize for splitting
 
-  const getImageFromServer = async () => {
+  const getImageFromServer = () => {
     setshowstart(false);
     setrestart(false);
     setHole(999);
     setsolved(false);
     steps = 0;
-    await fetch(
-      `https://slicer12.herokuapp.com/image_slicer?gs=${rows}&cat=${category}`
-    )
-      .then((response) => response.json())
-      .then((res) => {
-        res.datalist.forEach((element, index) => {
-          element.id = index;
-        });
-        setSplitImages(res.datalist);
-        hintimage = res.datalist.slice();
-        setshowstart(true);
-      })
-      .catch((error) => {
-        console.log("Unable to fetch images------------\n\n\n", error);
-      });
+    console.log("=================================");
+    console.log(offlinejson[gridsize][0]["datalist"]);
+    offlinejson[gridsize][0]["datalist"].forEach((element, index) => {
+      element.id = index;
+    });
+    setSplitImages(offlinejson[gridsize][0]["datalist"]);
+    setshowstart(true);
+    hintimage = offlinejson[gridsize][0]["datalist"].slice();
   };
 
   //checks whether puzzle is solved
@@ -176,12 +190,6 @@ const Tiles = (props) => {
         }, 1200);
         setHole(999);
         setstopwatchStart(false);
-        // if (state.puzzlesound) {
-        //   state.puzzlesound.release();
-        // }
-        // if (lsound) {
-        //   lsound.release();
-        // }
       }
     }
   };
@@ -240,16 +248,15 @@ const Tiles = (props) => {
   };
 
   return (
-    <>
+    <ImageBackground
+      source={require("../img/background.png")}
+      style={{ position: "absolute", width: "100%", height: "100%" }}
+    >
       {imgmodal && (
         <ModalHint gs={rows} imgurl={hintimage} showmodal={hideimgmodal} />
       )}
       {solved && (
-        <ModalComponent
-          start={handleButtonClick}
-          back={goBack}
-          nextpuzzle={getImageFromServer}
-        />
+        <OfflineModalComponent start={handleButtonClick} back={goBack} />
       )}
       <SafeAreaView style={styles.container}>
         <View
@@ -272,7 +279,6 @@ const Tiles = (props) => {
         <Transitioning.View ref={ref} transition={transition} style={gridview}>
           {splitImages.map((item, index) => (
             <Tile
-              {...props}
               key={item.id}
               hole={hole}
               index={index}
@@ -347,7 +353,7 @@ const Tiles = (props) => {
           )}
         </View>
       </SafeAreaView>
-    </>
+    </ImageBackground>
   );
 };
 
@@ -371,4 +377,4 @@ const styles = StyleSheet.create({
     marginTop: height * 0.05,
   },
 });
-export default Tiles;
+export default OfflinePlay;

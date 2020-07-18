@@ -24,16 +24,21 @@ import { SoundContext } from "./Context";
 
 import { catarray } from "./categoryimages";
 
+import NetInfo from "@react-native-community/netinfo";
+
 Icon.loadFont();
 
 const { width, height } = Dimensions.get("window");
-
+// setInterval(() => {
+//   //unsubscribe();
+//}, 5000);
 // eslint-disable-next-line no-undef
 export default ImagePicker = ({ route, navigation }) => {
   const options = ["Easy", "Medium", "Hard"];
   const { state, dispatch } = React.useContext(SoundContext);
   const [difficultyLevel, setDifficultyLevel] = useState("Easy");
-
+  const [netstatus, setnetstatus] = useState();
+  const [netstate, setnetstate] = useState();
   const [animeopacity, setanimeopactiyy] = useState(new Animated.Value(1));
 
   const setSelectedDifficultyLevel = (selectedOption) => {
@@ -43,7 +48,15 @@ export default ImagePicker = ({ route, navigation }) => {
   const [imageUrl, setImageUrl] = useState(catarray[0].uri);
   const [title, setTitle] = useState(catarray[0].title);
   const [modalVisible, setModalVisible] = useState(false);
-
+  //const unsubscribe =
+  NetInfo.addEventListener((state) => {
+    console.log("Connection type", state.type);
+    console.log("Is connected?", state.isConnected);
+    if (!(netstate === state.isConnected)) {
+      setnetstatus(state.isConnected);
+      setnetstate(state.isConnected);
+    }
+  });
   useEffect(() => {
     animateopacity();
   }, [difficultyLevel]);
@@ -158,10 +171,17 @@ export default ImagePicker = ({ route, navigation }) => {
               Select Difficulty Level
             </Text>
             <View>
-              <Image
-                source={{ uri: imageUrl }}
-                style={{ height: 100, width: 100, marginBottom: 20 }}
-              />
+              {netstatus ? (
+                <Image
+                  source={{ uri: imageUrl }}
+                  style={{ height: 100, width: 100, marginBottom: 20 }}
+                />
+              ) : (
+                <Image
+                  source={require("../assets/no-internet.png")}
+                  style={{ height: 100, width: 100, marginBottom: 20 }}
+                />
+              )}
               {difficultyLevel === "Easy" ? (
                 <Animated.Image
                   source={require("../assets/3x3.png")}
@@ -221,10 +241,17 @@ export default ImagePicker = ({ route, navigation }) => {
               onPress={() => {
                 setModalVisible(false);
                 state.sound.release();
-                navigation.navigate("GameScreen", {
-                  level: difficultyLevel,
-                  category: title,
-                });
+                if (netstatus === false) {
+                  navigation.navigate("OfflineScreen", {
+                    level: difficultyLevel,
+                    category: title,
+                  });
+                } else {
+                  navigation.navigate("GameScreen", {
+                    level: difficultyLevel,
+                    category: title,
+                  });
+                }
               }}
             >
               <Text style={{ fontSize: 20 }}>Play</Text>
@@ -232,64 +259,112 @@ export default ImagePicker = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
-      <SafeAreaView>
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-          <Text style={styles.textstyle}>Cash:100</Text>
-          <Text style={styles.textstyle}>Coins:2300</Text>
-          <Text style={styles.textstyle}>Add Friend</Text>
-        </View>
-        <Text style={[styles.textstyle, { margin: 30 }]}>
-          Click to play {title} puzzle
-        </Text>
-        <View
-          style={{
-            marginHorizontal: "10%",
-            flexDirection: "column",
-            width: "80%",
-            height: height * 0.5,
-            borderRadius: 30,
-            alignItems: "center",
-          }}
-        >
-          <Image
-            source={{ uri: imageUrl }}
+      {netstatus ? (
+        <SafeAreaView>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+          >
+            <Text style={styles.textstyle}>Cash:100</Text>
+            <Text style={styles.textstyle}>Coins:2300</Text>
+            <Text style={styles.textstyle}>Add Friend</Text>
+          </View>
+          <Text style={[styles.textstyle, { margin: 30 }]}>
+            Click to play {title} puzzle
+          </Text>
+          <View
             style={{
-              width: width - 80,
+              marginHorizontal: "10%",
+              flexDirection: "column",
+              width: "80%",
               height: height * 0.5,
               borderRadius: 30,
+              alignItems: "center",
             }}
+          >
+            <Image
+              source={{ uri: imageUrl }}
+              style={{
+                width: width - 80,
+                height: height * 0.5,
+                borderRadius: 30,
+              }}
+            />
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                animateopacity();
+              }}
+            >
+              <View
+                style={{
+                  bottom: -height / 25,
+                  position: "absolute",
+                }}
+              >
+                <Image
+                  source={require("../assets/play-button.png")}
+                  style={{ width: 80, height: 80 }}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          <ScrollView
+            persistentScrollbar={true}
+            horizontal={true}
+            style={{ marginTop: "15%" }}
+            centerContent={true}
+            //onScroll={(event) => console.log(event.nativeEvent.contentOffset.x)}
+          >
+            {catarray.map((item) => (
+              <Card key={item.id} item={item} />
+            ))}
+          </ScrollView>
+        </SafeAreaView>
+      ) : (
+        <View>
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: "600",
+              top: 100,
+              left: width * 0.25,
+              color: "white",
+            }}
+          >
+            Play with this offline
+          </Text>
+          <Image
+            style={{
+              height: height / 2,
+              width: "100%",
+              top: height / 4,
+              position: "absolute",
+            }}
+            source={require("../assets/no-internet.png")}
           />
           <TouchableWithoutFeedback
             onPress={() => {
+              setImageUrl("../assets/no-internet.png");
+              setTitle("no net");
               setModalVisible(!modalVisible);
               animateopacity();
             }}
           >
             <View
               style={{
-                bottom: -height / 25,
+                top: height * 0.8,
+                left: width / 2 - width * 0.15,
                 position: "absolute",
               }}
             >
               <Image
                 source={require("../assets/play-button.png")}
-                style={{ width: 80, height: 80 }}
+                style={{ width: 120, height: 120 }}
               />
             </View>
           </TouchableWithoutFeedback>
         </View>
-        <ScrollView
-          persistentScrollbar={true}
-          horizontal={true}
-          style={{ marginTop: "15%" }}
-          centerContent={true}
-          //onScroll={(event) => console.log(event.nativeEvent.contentOffset.x)}
-        >
-          {catarray.map((item) => (
-            <Card key={item.id} item={item} />
-          ))}
-        </ScrollView>
-      </SafeAreaView>
+      )}
     </ImageBackground>
   );
 };

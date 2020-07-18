@@ -10,6 +10,7 @@ import { View, Button } from "react-native";
 import SettingsModalView from "./Components/SettingsModal";
 import ImagePicker from "./Components/ImagePicker";
 import { SoundProvider } from "./Components/Context";
+import OfflinePlay from "./Components/offlineplay";
 var navigator;
 const Stack = createStackNavigator();
 
@@ -102,6 +103,7 @@ function MyStack() {
             }}
           />
           <Stack.Screen name="BoardScreen" component={BoardScr} />
+          <Stack.Screen name="OfflineScreen" component={OfflinePlay} />
         </Stack.Navigator>
       </NavigationContainer>
       {showmodal && <SettingsModalView hide={hidemodal} lobby={navigator} />}

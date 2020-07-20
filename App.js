@@ -10,7 +10,7 @@ import { View, Button } from "react-native";
 import SettingsModalView from "./Components/SettingsModal";
 import ImagePicker from "./Components/ImagePicker";
 import { SoundProvider } from "./Components/Context";
-import OfflinePlay from "./Components/offlineplay";
+import OfflinePlay from "./Components/offlineplayscreen";
 var navigator;
 const Stack = createStackNavigator();
 

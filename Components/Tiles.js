@@ -25,6 +25,8 @@ import ModalComponent from "./WinModalView";
 
 import ModalHint from "./HintModal";
 
+import NetInfo from "@react-native-community/netinfo";
+
 import Stopwatch from "./StopWatch";
 
 import { SoundContext } from "./Context";
@@ -47,8 +49,9 @@ const Tiles = (props) => {
   const [showstart, setshowstart] = useState(false);
   const [imgmodal, setimgmodal] = useState(false);
   const [stopwatchStart, setstopwatchStart] = useState(false);
-  const [stopwatchReset, setstopwatchReset] = useState(false);
   const [disablebutton, setdisablebutton] = useState(false);
+  const [netstatus, setnetstatus] = useState();
+  const [netstate, setnetstate] = useState();
   const [restart, setrestart] = useState(false);
   const pieceWidth = width / cols;
   const pieceHeight = width / rows;
@@ -56,10 +59,6 @@ const Tiles = (props) => {
   const N = rows;
   const ref = useRef();
   let lsound;
-
-  const appState = useRef(AppState.currentState);
-
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
   const transition = (
     <Transition.Together>
@@ -69,7 +68,25 @@ const Tiles = (props) => {
 
   state.puzzlesound.play();
   state.puzzlesound.setNumberOfLoops(-1);
-
+  const unsubscribe = NetInfo.addEventListener((state) => {
+    console.log("Connection type", state.type);
+    console.log("Is connected?", state.isConnected);
+    if (!(netstate === state.isConnected)) {
+      setnetstatus(state.isConnected);
+      setnetstate(state.isConnected);
+    }
+  });
+  useEffect(() => {
+    if (netstate === false) {
+      Alert.alert("No internet Connection. Your Progress will not be stored");
+    }
+  }, [netstate]);
+  useEffect(() => {
+    return () => {
+      console.log("cleaning code called");
+      unsubscribe();
+    };
+  });
   useEffect(() => {
     console.log("dispatching upadte inttiles");
     dispatch({ type: "set intiles to true" });
@@ -249,6 +266,7 @@ const Tiles = (props) => {
           start={handleButtonClick}
           back={goBack}
           nextpuzzle={getImageFromServer}
+          netstat={netstate}
         />
       )}
       <SafeAreaView style={styles.container}>

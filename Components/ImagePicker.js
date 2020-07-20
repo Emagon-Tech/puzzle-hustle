@@ -29,10 +29,7 @@ import NetInfo from "@react-native-community/netinfo";
 Icon.loadFont();
 
 const { width, height } = Dimensions.get("window");
-// setInterval(() => {
-//   //unsubscribe();
-//}, 5000);
-// eslint-disable-next-line no-undef
+
 export default ImagePicker = ({ route, navigation }) => {
   const options = ["Easy", "Medium", "Hard"];
   const { state, dispatch } = React.useContext(SoundContext);
@@ -48,8 +45,8 @@ export default ImagePicker = ({ route, navigation }) => {
   const [imageUrl, setImageUrl] = useState(catarray[0].uri);
   const [title, setTitle] = useState(catarray[0].title);
   const [modalVisible, setModalVisible] = useState(false);
-  //const unsubscribe =
-  NetInfo.addEventListener((state) => {
+
+  const unsubscribe = NetInfo.addEventListener((state) => {
     console.log("Connection type", state.type);
     console.log("Is connected?", state.isConnected);
     if (!(netstate === state.isConnected)) {
@@ -60,7 +57,11 @@ export default ImagePicker = ({ route, navigation }) => {
   useEffect(() => {
     animateopacity();
   }, [difficultyLevel]);
-
+  useEffect(() => {
+    return () => {
+      unsubscribe();
+    };
+  });
   function Card({ item }) {
     const { uri, title, label } = item;
     const cardstyle = {

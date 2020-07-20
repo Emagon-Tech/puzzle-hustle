@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   View,
-  Alert,
   Text,
   Modal,
   Dimensions,
@@ -16,6 +15,7 @@ export default ModalComponent = (props) => {
   const { start } = props;
   const { back } = props;
   const { nextpuzzle } = props;
+  const { netstat } = props;
   const [modalVisible, setModalVisible] = useState(true);
   const styles = StyleSheet.create({
     container: {
@@ -165,26 +165,30 @@ export default ModalComponent = (props) => {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-              style={styles.modalButton}
-              onPress={() => {
-                setModalVisible(false);
-                nextpuzzle();
-              }}
-            >
-              <View style={{ justifyContent: "center", alignItems: "center" }}>
-                <Icon name="forward" size={30} color="white" />
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    color: "white",
-                  }}
+            {netstat && (
+              <TouchableWithoutFeedback
+                style={styles.modalButton}
+                onPress={() => {
+                  setModalVisible(false);
+                  nextpuzzle();
+                }}
+              >
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
                 >
-                  Solve Next
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
+                  <Icon name="forward" size={30} color="white" />
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontWeight: "bold",
+                      color: "white",
+                    }}
+                  >
+                    Solve Next
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+            )}
           </View>
         </View>
       </View>

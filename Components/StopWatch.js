@@ -53,12 +53,9 @@ class StopWatch extends Component {
   componentWillReceiveProps(newProps) {
     console.log(newProps);
     if (newProps.start) {
-      console.log("calling start()");
       this.start();
     } else {
-      console.log("calling stop()");
       this.stop();
-      console.log("calling reset()");
       this.reset();
     }
     if (newProps.reset) {

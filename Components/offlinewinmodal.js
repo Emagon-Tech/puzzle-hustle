@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   View,
+  Alert,
   Text,
   Modal,
   Dimensions,
@@ -11,11 +12,11 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import LottieView from "lottie-react-native";
 
 const { width, height } = Dimensions.get("screen");
-export default ModalComponent = (props) => {
+
+const OfflineModalComponent = (props) => {
   const { start } = props;
   const { back } = props;
-  const { nextpuzzle } = props;
-  const { netstat } = props;
+
   const [modalVisible, setModalVisible] = useState(true);
   const styles = StyleSheet.create({
     container: {
@@ -84,14 +85,6 @@ export default ModalComponent = (props) => {
     >
       <View style={{ opacity: 0.9 }}>
         <View style={styles.modalView}>
-          <View style={{ height: 500, width: 700, position: "absolute" }}>
-            <LottieView
-              source={require("../assets/coin.json")}
-              autoPlay
-              loop={false}
-              speed={0.8}
-            />
-          </View>
           <View style={{ height: height, width: width, position: "absolute" }}>
             <LottieView
               source={require("../assets/confetti-cannon.json")}
@@ -100,20 +93,15 @@ export default ModalComponent = (props) => {
               speed={0.8}
             />
           </View>
-          <View style={{ height: 200, width: 200, position: "absolute" }}>
-            <LottieView
-              source={require("../assets/piggy-bank.json")}
-              autoPlay
-              loop={true}
-              speed={0.8}
-            />
+          <View style={{ top: 150, width: "100%", position: "absolute" }}>
+            <Text style={{ color: "white", fontSize: 22, textAlign: "center" }}>
+              {" "}
+              Keep Practicing
+            </Text>
           </View>
           <View style={{ marginBottom: 10 }}>
             <Text style={{ fontSize: 30, color: "white" }}>
               Congratulations
-            </Text>
-            <Text style={{ fontSize: 25, color: "white" }}>
-              Coins Earned: 100
             </Text>
           </View>
           <View
@@ -165,33 +153,10 @@ export default ModalComponent = (props) => {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-            {netstat && (
-              <TouchableWithoutFeedback
-                style={styles.modalButton}
-                onPress={() => {
-                  setModalVisible(false);
-                  nextpuzzle();
-                }}
-              >
-                <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
-                  <Icon name="forward" size={30} color="white" />
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontWeight: "bold",
-                      color: "white",
-                    }}
-                  >
-                    Solve Next
-                  </Text>
-                </View>
-              </TouchableWithoutFeedback>
-            )}
           </View>
         </View>
       </View>
     </Modal>
   );
 };
+export default OfflineModalComponent;

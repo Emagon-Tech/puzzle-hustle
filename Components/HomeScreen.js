@@ -7,12 +7,13 @@ import {
   Animated,
   View,
   AppState,
+  AsyncStorage,Dimensions
 } from "react-native";
 
 import { SoundContext } from "./Context";
 
 import Sound from "react-native-sound";
-
+const {width,height}=Dimensions.get('screen');
 var SPRING_CONFIG = { tension: 1, friction: 3 };
 
 const Home = ({ navigation }) => {
@@ -23,6 +24,7 @@ const Home = ({ navigation }) => {
   let panR = new Animated.ValueXY();
   let togglebutton = new Animated.Value(0);
   let lsound, rsound;
+  const [username,setusername]=useState();
   const { state, dispatch } = useContext(SoundContext);
   state.puzzlesound.play();
   state.puzzlesound.setNumberOfLoops(-1);
@@ -37,12 +39,18 @@ const Home = ({ navigation }) => {
   //   }, [state.intiles]);
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange);
-
+    getuser();
     return () => {
       AppState.removeEventListener("change", _handleAppStateChange);
     };
   }, []);
-
+const getuser=async ()=>{
+  const current_user=await AsyncStorage.getItem("current_user");
+if(current_user){
+  const ok=JSON.parse(current_user);
+  setusername(ok.username);
+  console.log(current_user['username']);}
+};
   const _handleAppStateChange = (nextAppState) => {
     console.log("state of in tiles", state.intiles);
     if (state.sound) {
@@ -202,6 +210,9 @@ const Home = ({ navigation }) => {
       }}
       source={require("../img/background.png")}
     >
+      <View>
+    <Text style={{color:'white',left:width-100}}>{username}</Text>
+      </View>
       <View>
         <View style={styles.animcontainer}>
           <Animated.View

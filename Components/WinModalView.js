@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -6,17 +6,76 @@ import {
   Modal,
   Dimensions,
   TouchableWithoutFeedback,
+  TextInput,
+  TouchableOpacity,
 } from "react-native";
+
+import AsyncStorage from "@react-native-community/async-storage";
+
 import Icon from "react-native-vector-icons/FontAwesome";
 import LottieView from "lottie-react-native";
 
 const { width, height } = Dimensions.get("screen");
-export default ModalComponent = (props) => {
+const ModalComponent = (props) => {
   const { start } = props;
   const { back } = props;
   const { nextpuzzle } = props;
   const { netstat } = props;
   const [modalVisible, setModalVisible] = useState(true);
+  const [registerModalVisibility, setRegisterModalVisibility] = useState(false);
+  const [user, setUser] = useState({});
+  const [msg, setMessage] = useState("");
+  const [issignedup, setIsSignedUp] = useState(false);
+  const [username, setUsername] = useState();
+  const storeUser = async (userjson) => {
+    await AsyncStorage.setItem("CURRENT_USER", JSON.stringify(userjson));
+  };
+  let usernameInput = "";
+  useEffect(() => {
+    console.log("in useeffect of modal");
+    getUser();
+  }, []);
+  const getUser = async () => {
+    const CURRENT_USER = await AsyncStorage.getItem("CURRENT_USER");
+    if (CURRENT_USER) {
+      console.log(CURRENT_USER);
+      setIsSignedUp(true);
+      setUsername(CURRENT_USER.username);
+    }
+  };
+  const registerUsername = async () => {
+    let data = {
+      method: "POST",
+      mode: "same-origin",
+      body: JSON.stringify({
+        username: usernameInput,
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Connection: "keep-Alive",
+      },
+    };
+    await fetch("http://192.168.0.13:4000/users/register", data)
+      .then((response) => response.json()) // promise
+      .then((response) => {
+        console.log("---------\n", response);
+        if (response.message) {
+          setMessage(response.message);
+        } else {
+          setUser(response);
+          setMessage("Signed up Sucessfully as " + response.username);
+          storeUser(response);
+          setIsSignedUp(true);
+          setRegisterModalVisibility(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  // await fetch('http://localhost:4000/users/register',{method:"POST"})
+  // .then((res)=>{console.log(res)})
+  // .catch((err)=>{console.log(err)})
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -33,6 +92,27 @@ export default ModalComponent = (props) => {
       opacity: 0.5,
     },
     modalView: {
+      justifyContent: "center",
+      alignItems: "center",
+      height: height * 0.5,
+      margin: 20,
+      marginTop: height / 3 - height * 0.1,
+      backgroundColor: "black",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      borderWidth: 20,
+      borderColor: "#000000",
+      shadowOpacity: 0.6,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
+    regmodalView: {
       justifyContent: "center",
       alignItems: "center",
       height: height * 0.5,
@@ -82,6 +162,65 @@ export default ModalComponent = (props) => {
         //Alert.alert("Modal has been closed.");
       }}
     >
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={registerModalVisibility}
+        presentationStyle={"overFullScreen"}
+        onRequestClose={() => {
+          //Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View style={{ opacity: 1 }}>
+          <View style={styles.regmodalView}>
+            <View style={{ top: -100, left: 150 }}>
+              <TouchableWithoutFeedback
+                onPress={() => setRegisterModalVisibility(false)}
+              >
+                <Icon name="close" size={30} color="white" />
+              </TouchableWithoutFeedback>
+            </View>
+            <Text style={{ color: "white", top: -50 }}>{msg}</Text>
+            <Text style={{ color: "white", top: -10 }}>
+              Enter a Unique Username
+            </Text>
+            <TextInput
+              style={{
+                height: 40,
+                width: 200,
+                borderColor: "gray",
+                borderWidth: 1,
+                backgroundColor: "white",
+              }}
+              onChangeText={(text) => (usernameInput = text)}
+              value={usernameInput}
+            />
+            <TouchableOpacity onPress={registerUsername}>
+              <View
+                style={{
+                  backgroundColor: "white",
+                  height: 50,
+                  width: 100,
+                  borderRadius: 20,
+                  top: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    alignItems: "center",
+                    top: 10,
+                    fontSize: 18,
+                  }}
+                >
+                  Submit
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
       <View style={{ opacity: 0.9 }}>
         <View style={styles.modalView}>
           <View style={{ height: 500, width: 700, position: "absolute" }}>
@@ -109,8 +248,8 @@ export default ModalComponent = (props) => {
             />
           </View>
           <View style={{ marginBottom: 10 }}>
-            <Text style={{ fontSize: 30, color: "white" }}>
-              Congratulations
+            <Text style={{ fontSize: 25, color: "white" }}>
+              Congratulations {username}
             </Text>
             <Text style={{ fontSize: 25, color: "white" }}>
               Coins Earned: 100
@@ -190,8 +329,36 @@ export default ModalComponent = (props) => {
               </TouchableWithoutFeedback>
             )}
           </View>
+          {!issignedup && (
+            <View style={{ top: 10 }}>
+              <Text style={{ color: "white" }}>
+                your progress might not be saved.
+              </Text>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  setRegisterModalVisibility(true);
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: 90,
+                    height: 20,
+                    alignItems: "center",
+                    left: 60,
+                    borderRadius: 10,
+                    top: 5,
+                  }}
+                >
+                  <Text style={{ color: "black" }}>Save it Here</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          )}
         </View>
       </View>
     </Modal>
   );
 };
+
+export default ModalComponent;

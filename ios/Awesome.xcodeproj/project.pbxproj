@@ -12,14 +12,14 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1B0F6A5B3024EDCE63A56003 /* libPods-Awesome.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05917C0D37C85AA3F43FE095 /* libPods-Awesome.a */; };
+		269827B9040EAA0BF9C9C1EE /* libPods-Awesome.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA04237B760EB5BF21836D60 /* libPods-Awesome.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* AwesomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AwesomeTests.m */; };
-		3316A61F8FDB2DAA401F23DA /* libPods-Awesome-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CA966F8DAAC3A2404CC3996 /* libPods-Awesome-tvOS.a */; };
-		3486424975AFFD5DECD4E504 /* libPods-Awesome-AwesomeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C84A07076263D28D2829998 /* libPods-Awesome-AwesomeTests.a */; };
-		4876114B15715A6E736EF5FF /* libPods-Awesome-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDBF68D65DA5252F832B878 /* libPods-Awesome-tvOSTests.a */; };
+		38E4584715B668D25285E954 /* libPods-Awesome-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C929B3F960FF517C151122D /* libPods-Awesome-tvOS.a */; };
+		54DA5C628DFCB2B53A7D7547 /* libPods-Awesome-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AA9198FBCF135179EEC06CE /* libPods-Awesome-tvOSTests.a */; };
+		6F81F374EB4E982AF7B6D63B /* libPods-Awesome-AwesomeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C418793F986D1383A71475F /* libPods-Awesome-AwesomeTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +44,6 @@
 		00E356EE1AD99517003FC87E /* AwesomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AwesomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AwesomeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AwesomeTests.m; sourceTree = "<group>"; };
-		05917C0D37C85AA3F43FE095 /* libPods-Awesome.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Awesome.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* Awesome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Awesome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Awesome/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Awesome/AppDelegate.m; sourceTree = "<group>"; };
@@ -52,21 +51,24 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Awesome/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Awesome/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Awesome/main.m; sourceTree = "<group>"; };
-		1CDBF68D65DA5252F832B878 /* libPods-Awesome-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Awesome-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BE9BDAE8E2B7D4289D46560 /* Pods-Awesome-AwesomeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-AwesomeTests.release.xcconfig"; path = "Target Support Files/Pods-Awesome-AwesomeTests/Pods-Awesome-AwesomeTests.release.xcconfig"; sourceTree = "<group>"; };
-		2C84A07076263D28D2829998 /* libPods-Awesome-AwesomeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Awesome-AwesomeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CA966F8DAAC3A2404CC3996 /* libPods-Awesome-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Awesome-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C418793F986D1383A71475F /* libPods-Awesome-AwesomeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Awesome-AwesomeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		263080B6A29DBE240C7A7659 /* Pods-Awesome-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Awesome-tvOSTests/Pods-Awesome-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		2B2F3348A260C064A063EAEB /* Pods-AwesomeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeTests.debug.xcconfig"; path = "Target Support Files/Pods-AwesomeTests/Pods-AwesomeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Awesome-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Awesome-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Awesome-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Awesome-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		50C514554CFDBB5F6B30E551 /* Pods-Awesome-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Awesome-tvOS/Pods-Awesome-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		9BADE7B3A841FE95F31B90E1 /* Pods-Awesome-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Awesome-tvOSTests/Pods-Awesome-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		C9DE238121DA1527EFE58DAC /* Pods-Awesome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome.debug.xcconfig"; path = "Target Support Files/Pods-Awesome/Pods-Awesome.debug.xcconfig"; sourceTree = "<group>"; };
-		D569A86DA8130EA45D417ECC /* Pods-Awesome-AwesomeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-AwesomeTests.debug.xcconfig"; path = "Target Support Files/Pods-Awesome-AwesomeTests/Pods-Awesome-AwesomeTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D93DEDA00290D06A023A8B0E /* Pods-Awesome-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Awesome-tvOSTests/Pods-Awesome-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DAFFB1200A8029ED806C103B /* Pods-Awesome-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Awesome-tvOS/Pods-Awesome-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		4036862EA79AA20075109292 /* Pods-Awesome-AwesomeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-AwesomeTests.debug.xcconfig"; path = "Target Support Files/Pods-Awesome-AwesomeTests/Pods-Awesome-AwesomeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4A6A2EE557924BA393C2A9BA /* Pods-Awesome-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Awesome-tvOS/Pods-Awesome-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		6C871AB1B26CD1A1D136EA99 /* Pods-Awesome-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Awesome-tvOS/Pods-Awesome-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		6C929B3F960FF517C151122D /* libPods-Awesome-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Awesome-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7AA9198FBCF135179EEC06CE /* libPods-Awesome-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Awesome-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		856834C6C0D989D5E9C25AB7 /* Pods-Awesome-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Awesome-tvOSTests/Pods-Awesome-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9B1872661FFEA79EFDBAB9AC /* Pods-Awesome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome.debug.xcconfig"; path = "Target Support Files/Pods-Awesome/Pods-Awesome.debug.xcconfig"; sourceTree = "<group>"; };
+		9EFD1801D21E28D4D4B074EC /* Pods-Awesome-AwesomeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome-AwesomeTests.release.xcconfig"; path = "Target Support Files/Pods-Awesome-AwesomeTests/Pods-Awesome-AwesomeTests.release.xcconfig"; sourceTree = "<group>"; };
+		EA04237B760EB5BF21836D60 /* libPods-Awesome.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Awesome.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA31CF8A60343EC0A40CF06C /* Pods-AwesomeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeTests.release.xcconfig"; path = "Target Support Files/Pods-AwesomeTests/Pods-AwesomeTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		F0B46125E6B84F1F07DB3A46 /* Pods-Awesome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome.release.xcconfig"; path = "Target Support Files/Pods-Awesome/Pods-Awesome.release.xcconfig"; sourceTree = "<group>"; };
+		EF019D3912676B13A0D4F7AA /* Pods-Awesome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Awesome.release.xcconfig"; path = "Target Support Files/Pods-Awesome/Pods-Awesome.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3486424975AFFD5DECD4E504 /* libPods-Awesome-AwesomeTests.a in Frameworks */,
+				6F81F374EB4E982AF7B6D63B /* libPods-Awesome-AwesomeTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B0F6A5B3024EDCE63A56003 /* libPods-Awesome.a in Frameworks */,
+				269827B9040EAA0BF9C9C1EE /* libPods-Awesome.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3316A61F8FDB2DAA401F23DA /* libPods-Awesome-tvOS.a in Frameworks */,
+				38E4584715B668D25285E954 /* libPods-Awesome-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4876114B15715A6E736EF5FF /* libPods-Awesome-tvOSTests.a in Frameworks */,
+				54DA5C628DFCB2B53A7D7547 /* libPods-Awesome-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,33 +138,35 @@
 			name = Awesome;
 			sourceTree = "<group>";
 		};
+		14CE8A9ED88054787D294602 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9B1872661FFEA79EFDBAB9AC /* Pods-Awesome.debug.xcconfig */,
+				EF019D3912676B13A0D4F7AA /* Pods-Awesome.release.xcconfig */,
+				6C871AB1B26CD1A1D136EA99 /* Pods-Awesome-tvOS.debug.xcconfig */,
+				4A6A2EE557924BA393C2A9BA /* Pods-Awesome-tvOS.release.xcconfig */,
+				856834C6C0D989D5E9C25AB7 /* Pods-Awesome-tvOSTests.debug.xcconfig */,
+				263080B6A29DBE240C7A7659 /* Pods-Awesome-tvOSTests.release.xcconfig */,
+				2B2F3348A260C064A063EAEB /* Pods-AwesomeTests.debug.xcconfig */,
+				EA31CF8A60343EC0A40CF06C /* Pods-AwesomeTests.release.xcconfig */,
+				4036862EA79AA20075109292 /* Pods-Awesome-AwesomeTests.debug.xcconfig */,
+				9EFD1801D21E28D4D4B074EC /* Pods-Awesome-AwesomeTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				05917C0D37C85AA3F43FE095 /* libPods-Awesome.a */,
-				2C84A07076263D28D2829998 /* libPods-Awesome-AwesomeTests.a */,
-				2CA966F8DAAC3A2404CC3996 /* libPods-Awesome-tvOS.a */,
-				1CDBF68D65DA5252F832B878 /* libPods-Awesome-tvOSTests.a */,
+				EA04237B760EB5BF21836D60 /* libPods-Awesome.a */,
+				1C418793F986D1383A71475F /* libPods-Awesome-AwesomeTests.a */,
+				6C929B3F960FF517C151122D /* libPods-Awesome-tvOS.a */,
+				7AA9198FBCF135179EEC06CE /* libPods-Awesome-tvOSTests.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		82309F01E958F16FAB842EDF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C9DE238121DA1527EFE58DAC /* Pods-Awesome.debug.xcconfig */,
-				F0B46125E6B84F1F07DB3A46 /* Pods-Awesome.release.xcconfig */,
-				D569A86DA8130EA45D417ECC /* Pods-Awesome-AwesomeTests.debug.xcconfig */,
-				2BE9BDAE8E2B7D4289D46560 /* Pods-Awesome-AwesomeTests.release.xcconfig */,
-				DAFFB1200A8029ED806C103B /* Pods-Awesome-tvOS.debug.xcconfig */,
-				50C514554CFDBB5F6B30E551 /* Pods-Awesome-tvOS.release.xcconfig */,
-				D93DEDA00290D06A023A8B0E /* Pods-Awesome-tvOSTests.debug.xcconfig */,
-				9BADE7B3A841FE95F31B90E1 /* Pods-Awesome-tvOSTests.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -181,7 +185,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				A82B0220F9344EC0A68F0353 /* Resources */,
-				82309F01E958F16FAB842EDF /* Pods */,
+				14CE8A9ED88054787D294602 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -214,11 +218,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AwesomeTests" */;
 			buildPhases = (
-				2F8E00A97B3DEC59BCE5E36D /* [CP] Check Pods Manifest.lock */,
+				A44F3CFE7B700E24C954E361 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				8B8DE23064B2C7E13CCD93FD /* [CP] Copy Pods Resources */,
+				DE0989785D7AEA8C70DDB0D4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -234,13 +238,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Awesome" */;
 			buildPhases = (
-				A759DB4EB6436AB0791C5669 /* [CP] Check Pods Manifest.lock */,
+				F33D6A5DC9BA1EF68B443ECE /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				C774F6DBC97C0E2056A46B42 /* [CP] Copy Pods Resources */,
+				EDF0F71FE138FEC474FF2A1D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -255,7 +259,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Awesome-tvOS" */;
 			buildPhases = (
-				8716A4BDA17DC39F42D11B63 /* [CP] Check Pods Manifest.lock */,
+				21D712E20E0CB1DAAF30FF3D /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -275,7 +279,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Awesome-tvOSTests" */;
 			buildPhases = (
-				6A70FACE0BFE1C16C2792BA5 /* [CP] Check Pods Manifest.lock */,
+				C84134DC2BA5CF128FBFDEA6 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -386,65 +390,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native Code And Images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
-		};
-		2F8E00A97B3DEC59BCE5E36D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Awesome-AwesomeTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6A70FACE0BFE1C16C2792BA5 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Awesome-tvOSTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8716A4BDA17DC39F42D11B63 /* [CP] Check Pods Manifest.lock */ = {
+		21D712E20E0CB1DAAF30FF3D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -466,7 +412,65 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8B8DE23064B2C7E13CCD93FD /* [CP] Copy Pods Resources */ = {
+		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native Code And Images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		A44F3CFE7B700E24C954E361 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Awesome-AwesomeTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C84134DC2BA5CF128FBFDEA6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Awesome-tvOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE0989785D7AEA8C70DDB0D4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -489,6 +493,7 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -508,35 +513,14 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Awesome-AwesomeTests/Pods-Awesome-AwesomeTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A759DB4EB6436AB0791C5669 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Awesome-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C774F6DBC97C0E2056A46B42 /* [CP] Copy Pods Resources */ = {
+		EDF0F71FE138FEC474FF2A1D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -559,6 +543,7 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -578,10 +563,33 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Awesome/Pods-Awesome-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F33D6A5DC9BA1EF68B443ECE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Awesome-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -689,7 +697,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D569A86DA8130EA45D417ECC /* Pods-Awesome-AwesomeTests.debug.xcconfig */;
+			baseConfigurationReference = 4036862EA79AA20075109292 /* Pods-Awesome-AwesomeTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -712,7 +720,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2BE9BDAE8E2B7D4289D46560 /* Pods-Awesome-AwesomeTests.release.xcconfig */;
+			baseConfigurationReference = 9EFD1801D21E28D4D4B074EC /* Pods-Awesome-AwesomeTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -732,7 +740,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C9DE238121DA1527EFE58DAC /* Pods-Awesome.debug.xcconfig */;
+			baseConfigurationReference = 9B1872661FFEA79EFDBAB9AC /* Pods-Awesome.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -759,7 +767,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F0B46125E6B84F1F07DB3A46 /* Pods-Awesome.release.xcconfig */;
+			baseConfigurationReference = EF019D3912676B13A0D4F7AA /* Pods-Awesome.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -780,7 +788,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DAFFB1200A8029ED806C103B /* Pods-Awesome-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 6C871AB1B26CD1A1D136EA99 /* Pods-Awesome-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -808,7 +816,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50C514554CFDBB5F6B30E551 /* Pods-Awesome-tvOS.release.xcconfig */;
+			baseConfigurationReference = 4A6A2EE557924BA393C2A9BA /* Pods-Awesome-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -836,7 +844,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D93DEDA00290D06A023A8B0E /* Pods-Awesome-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 856834C6C0D989D5E9C25AB7 /* Pods-Awesome-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -863,7 +871,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9BADE7B3A841FE95F31B90E1 /* Pods-Awesome-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 263080B6A29DBE240C7A7659 /* Pods-Awesome-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;

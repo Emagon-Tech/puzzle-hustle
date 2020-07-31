@@ -316,8 +316,8 @@ export default ImagePicker = ({ route, navigation }) => {
             centerContent={true}
             //onScroll={(event) => console.log(event.nativeEvent.contentOffset.x)}
           >
-            {catarray.map((item) => (
-              <Card key={item.id} item={item} />
+            {catarray.map((item, index) => (
+              <Card key={index} item={item} />
             ))}
           </ScrollView>
         </SafeAreaView>

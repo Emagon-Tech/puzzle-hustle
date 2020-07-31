@@ -22,33 +22,33 @@ const ModalComponent = (props) => {
   const { nextpuzzle } = props;
   const { netstat } = props;
   const [modalVisible, setModalVisible] = useState(true);
-  const [regmodalvisible, setregmodalvisibile] = useState(false);
-  const [value, onChangeText] = useState();
-  const [user, setuser] = useState({});
-  const [msg, setmsg] = useState("");
-  const [issignedup, setissignedup] = useState(false);
-  const [username, setusername] = useState();
-  const storeuser = async (userjson) => {
-    await AsyncStorage.setItem("current_user", JSON.stringify(userjson));
+  const [registerModalVisibility, setRegisterModalVisibility] = useState(false);
+  const [user, setUser] = useState({});
+  const [msg, setMessage] = useState("");
+  const [issignedup, setIsSignedUp] = useState(false);
+  const [username, setUsername] = useState();
+  const storeUser = async (userjson) => {
+    await AsyncStorage.setItem("CURRENT_USER", JSON.stringify(userjson));
   };
+  let usernameInput = "";
   useEffect(() => {
     console.log("in useeffect of modal");
-    getuser();
+    getUser();
   }, []);
-  const getuser = async () => {
-    const current_user = await AsyncStorage.getItem("current_user");
-    if (current_user) {
-      console.log(current_user);
-      setissignedup(true);
-      setusername(current_user.username);
+  const getUser = async () => {
+    const CURRENT_USER = await AsyncStorage.getItem("CURRENT_USER");
+    if (CURRENT_USER) {
+      console.log(CURRENT_USER);
+      setIsSignedUp(true);
+      setUsername(CURRENT_USER.username);
     }
   };
-  const registerusername = async () => {
+  const registerUsername = async () => {
     let data = {
       method: "POST",
       mode: "same-origin",
       body: JSON.stringify({
-        username: value,
+        username: usernameInput,
       }),
       headers: {
         Accept: "application/json",
@@ -56,16 +56,18 @@ const ModalComponent = (props) => {
         Connection: "keep-Alive",
       },
     };
-    await fetch("http://192.168.0.50:4000/users/register", data)
+    await fetch("http://192.168.0.13:4000/users/register", data)
       .then((response) => response.json()) // promise
       .then((response) => {
+        console.log("---------\n", response);
         if (response.message) {
-          setmsg(response.message);
+          setMessage(response.message);
         } else {
-          setuser(response);
-          setmsg("Signed up Sucessfully as" + response.username);
-          storeuser(response);
-          setissignedup(true);
+          setUser(response);
+          setMessage("Signed up Sucessfully as " + response.username);
+          storeUser(response);
+          setIsSignedUp(true);
+          setRegisterModalVisibility(false);
         }
       })
       .catch((err) => console.log(err));
@@ -163,7 +165,7 @@ const ModalComponent = (props) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={regmodalvisible}
+        visible={registerModalVisibility}
         presentationStyle={"overFullScreen"}
         onRequestClose={() => {
           //Alert.alert("Modal has been closed.");
@@ -173,7 +175,7 @@ const ModalComponent = (props) => {
           <View style={styles.regmodalView}>
             <View style={{ top: -100, left: 150 }}>
               <TouchableWithoutFeedback
-                onPress={() => setregmodalvisibile(false)}
+                onPress={() => setRegisterModalVisibility(false)}
               >
                 <Icon name="close" size={30} color="white" />
               </TouchableWithoutFeedback>
@@ -190,10 +192,10 @@ const ModalComponent = (props) => {
                 borderWidth: 1,
                 backgroundColor: "white",
               }}
-              onChangeText={(text) => onChangeText(text)}
-              value={value}
+              onChangeText={(text) => (usernameInput = text)}
+              value={usernameInput}
             />
-            <TouchableOpacity onPress={registerusername}>
+            <TouchableOpacity onPress={registerUsername}>
               <View
                 style={{
                   backgroundColor: "white",
@@ -334,7 +336,7 @@ const ModalComponent = (props) => {
               </Text>
               <TouchableWithoutFeedback
                 onPress={() => {
-                  setregmodalvisibile(true);
+                  setRegisterModalVisibility(true);
                 }}
               >
                 <View

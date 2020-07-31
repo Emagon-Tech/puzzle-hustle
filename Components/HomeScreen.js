@@ -7,13 +7,15 @@ import {
   Animated,
   View,
   AppState,
-  AsyncStorage,Dimensions
+  Dimensions,
 } from "react-native";
+
+import AsyncStorage from "@react-native-community/async-storage";
 
 import { SoundContext } from "./Context";
 
 import Sound from "react-native-sound";
-const {width,height}=Dimensions.get('screen');
+const { width, height } = Dimensions.get("screen");
 var SPRING_CONFIG = { tension: 1, friction: 3 };
 
 const Home = ({ navigation }) => {
@@ -24,7 +26,7 @@ const Home = ({ navigation }) => {
   let panR = new Animated.ValueXY();
   let togglebutton = new Animated.Value(0);
   let lsound, rsound;
-  const [username,setusername]=useState();
+  const [username, setRegisteredUsername] = useState();
   const { state, dispatch } = useContext(SoundContext);
   state.puzzlesound.play();
   state.puzzlesound.setNumberOfLoops(-1);
@@ -44,13 +46,15 @@ const Home = ({ navigation }) => {
       AppState.removeEventListener("change", _handleAppStateChange);
     };
   }, []);
-const getuser=async ()=>{
-  const current_user=await AsyncStorage.getItem("current_user");
-if(current_user){
-  const ok=JSON.parse(current_user);
-  setusername(ok.username);
-  console.log(current_user['username']);}
-};
+  const getuser = async () => {
+    console.log("HERE");
+    const CURRENT_USER = await AsyncStorage.getItem("CURRENT_USER");
+    console.log(CURRENT_USER, "=========\n");
+    if (CURRENT_USER) {
+      const userData = JSON.parse(CURRENT_USER);
+      setRegisteredUsername(userData.username);
+    }
+  };
   const _handleAppStateChange = (nextAppState) => {
     console.log("state of in tiles", state.intiles);
     if (state.sound) {
@@ -211,9 +215,6 @@ if(current_user){
       source={require("../img/background.png")}
     >
       <View>
-    <Text style={{color:'white',left:width-100}}>{username}</Text>
-      </View>
-      <View>
         <View style={styles.animcontainer}>
           <Animated.View
             style={{
@@ -355,6 +356,11 @@ if(current_user){
             <Text style={styles.Textin}>R</Text>
           </Animated.View>
         </View>
+      </View>
+      <View>
+        <Text style={{ color: "white", textAlign: "center" }}>
+          Welcome back, {username}!
+        </Text>
       </View>
       <Animated.View
         style={{

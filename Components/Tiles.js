@@ -109,7 +109,7 @@ const Tiles = (props) => {
     setshowstart(false);
     setrestart(false);
     setHole(999);
-    setsolved(false);
+    setsolved(true);
     steps = 0;
     await fetch(
       `https://slicer12.herokuapp.com/image_slicer?gs=${rows}&cat=${category}`

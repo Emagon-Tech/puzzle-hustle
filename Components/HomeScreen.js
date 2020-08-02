@@ -7,7 +7,6 @@ import {
   Animated,
   View,
   AppState,
-  Dimensions,
 } from "react-native";
 
 import AsyncStorage from "@react-native-community/async-storage";
@@ -15,7 +14,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { SoundContext } from "./Context";
 
 import Sound from "react-native-sound";
-const { width, height } = Dimensions.get("screen");
+
 var SPRING_CONFIG = { tension: 1, friction: 3 };
 
 const Home = ({ navigation }) => {
@@ -27,18 +26,13 @@ const Home = ({ navigation }) => {
   let togglebutton = new Animated.Value(0);
   let lsound, rsound;
   const [username, setRegisteredUsername] = useState();
+  const [issignedup, setIsSigneUp] = useState();
   const { state, dispatch } = useContext(SoundContext);
   state.puzzlesound.play();
   state.puzzlesound.setNumberOfLoops(-1);
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
-  //   useEffect(() => {
-  //     if (!state.intiles) {
-  //       state.puzzlesound.release();
-  //       state.sound.play();
-  //       state.sound.setNumberOfLoops(-1);
-  //     }
-  //   }, [state.intiles]);
+
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange);
     getuser();
@@ -51,8 +45,11 @@ const Home = ({ navigation }) => {
     const CURRENT_USER = await AsyncStorage.getItem("CURRENT_USER");
     console.log(CURRENT_USER, "=========\n");
     if (CURRENT_USER) {
+      setIsSigneUp(true);
       const userData = JSON.parse(CURRENT_USER);
       setRegisteredUsername(userData.username);
+    } else {
+      setIsSigneUp(false);
     }
   };
   const _handleAppStateChange = (nextAppState) => {
@@ -201,9 +198,9 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     animate();
   });
-  useEffect(() => {
-    togglebutton = !togglebutton;
-  }, [togglebutton]);
+  // useEffect(() => {
+  //   togglebutton = !togglebutton;
+  // }, [togglebutton]);
 
   return (
     <ImageBackground
@@ -358,9 +355,11 @@ const Home = ({ navigation }) => {
         </View>
       </View>
       <View>
-        <Text style={{ color: "white", textAlign: "center" }}>
-          Welcome back, {username}!
-        </Text>
+        {issignedup && (
+          <Text style={{ color: "white", textAlign: "center" }}>
+            Welcome back, {username}!
+          </Text>
+        )}
       </View>
       <Animated.View
         style={{

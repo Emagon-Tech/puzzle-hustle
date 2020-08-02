@@ -7,6 +7,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   TextInput,
+  Image,
   TouchableOpacity,
 } from "react-native";
 
@@ -21,16 +22,24 @@ const ModalComponent = (props) => {
   const { back } = props;
   const { nextpuzzle } = props;
   const { netstat } = props;
+  const { reward } = props;
   const [modalVisible, setModalVisible] = useState(true);
   const [registerModalVisibility, setRegisterModalVisibility] = useState(false);
   const [user, setUser] = useState({});
   const [msg, setMessage] = useState("");
   const [issignedup, setIsSignedUp] = useState(false);
   const [username, setUsername] = useState();
+  const [usernameInput, setUsernameInput] = useState("");
+
   const storeUser = async (userjson) => {
     await AsyncStorage.setItem("CURRENT_USER", JSON.stringify(userjson));
   };
-  let usernameInput = "";
+  const mergeUpdatedUser = async (updateduserjson) => {
+    await AsyncStorage.mergeItem(
+      "CURRENT_USER",
+      JSON.stringify(updateduserjson)
+    );
+  };
   useEffect(() => {
     console.log("in useeffect of modal");
     getUser();
@@ -41,6 +50,7 @@ const ModalComponent = (props) => {
       console.log(CURRENT_USER);
       setIsSignedUp(true);
       setUsername(CURRENT_USER.username);
+      updateCoins();
     }
   };
   const registerUsername = async () => {
@@ -56,26 +66,55 @@ const ModalComponent = (props) => {
         Connection: "keep-Alive",
       },
     };
-    await fetch("http://192.168.0.13:4000/users/register", data)
+    await fetch("http://192.168.0.50:4000/users/register", data)
       .then((response) => response.json()) // promise
       .then((response) => {
         console.log("---------\n", response);
-        if (response.message) {
-          setMessage(response.message);
+        if (response.error) {
+          setMessage(response.error);
         } else {
-          setUser(response);
           setMessage("Signed up Sucessfully as " + response.username);
           storeUser(response);
           setIsSignedUp(true);
           setRegisterModalVisibility(false);
+          updateCoins();
         }
       })
       .catch((err) => console.log(err));
   };
-  // await fetch('http://localhost:4000/users/register',{method:"POST"})
-  // .then((res)=>{console.log(res)})
-  // .catch((err)=>{console.log(err)})
-
+  const updateCoins = async () => {
+    const USER_JSON = await AsyncStorage.getItem("CURRENT_USER");
+    const USER = JSON.parse(USER_JSON);
+    let data = {
+      method: "PUT",
+      mode: "same-origin",
+      body: JSON.stringify({
+        addCoins: reward,
+      }),
+      headers: {
+        Authorization: `Bearer ${USER.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Connection: "keep-Alive",
+      },
+    };
+    await fetch(`http://192.168.0.50:4000/users/${USER.id}`, data)
+      .then((response) => response.json()) // promise
+      .then((response) => {
+        console.log("---------\n", response);
+        if (response.error) {
+          console.log("in response. message");
+          setMessage(response.error);
+        } else {
+          console.log("coins in update function ", response.coins);
+          let updateduser = user;
+          updateduser.coins = response.coins;
+          console.log(user);
+          mergeUpdatedUser(updateduser);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -100,7 +139,6 @@ const ModalComponent = (props) => {
       backgroundColor: "black",
       borderRadius: 20,
       padding: 35,
-      alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
@@ -121,7 +159,6 @@ const ModalComponent = (props) => {
       backgroundColor: "black",
       borderRadius: 20,
       padding: 35,
-      alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
@@ -192,7 +229,7 @@ const ModalComponent = (props) => {
                 borderWidth: 1,
                 backgroundColor: "white",
               }}
-              onChangeText={(text) => (usernameInput = text)}
+              onChangeText={(text) => setUsernameInput(text)}
               value={usernameInput}
             />
             <TouchableOpacity onPress={registerUsername}>
@@ -239,7 +276,9 @@ const ModalComponent = (props) => {
               speed={0.8}
             />
           </View>
-          <View style={{ height: 200, width: 200, position: "absolute" }}>
+          <View
+            style={{ height: 200, width: 200, position: "absolute", top: 75 }}
+          >
             <LottieView
               source={require("../assets/piggy-bank.json")}
               autoPlay
@@ -249,11 +288,15 @@ const ModalComponent = (props) => {
           </View>
           <View style={{ marginBottom: 10 }}>
             <Text style={{ fontSize: 25, color: "white" }}>
-              Congratulations {username}
+              Puzzled Solved!!
             </Text>
-            <Text style={{ fontSize: 25, color: "white" }}>
-              Coins Earned: 100
+            <Text style={{ fontSize: 22, color: "white", top: 20, left: 15 }}>
+              Earned: +{reward}
             </Text>
+            <Image
+              source={require("../assets/coins.png")}
+              style={{ height: 25, width: 25, left: 168, top: -10 }}
+            />
           </View>
           <View
             style={{

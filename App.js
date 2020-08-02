@@ -11,6 +11,7 @@ import SettingsModalView from "./Components/SettingsModal";
 import ImagePicker from "./Components/ImagePicker";
 import { SoundProvider } from "./Components/Context";
 import OfflinePlay from "./Components/offlineplayscreen";
+import LeaderBoard from "./Components/LeaderBoard";
 var navigator;
 const Stack = createStackNavigator();
 
@@ -104,6 +105,13 @@ function MyStack() {
           />
           <Stack.Screen name="BoardScreen" component={BoardScr} />
           <Stack.Screen name="OfflineScreen" component={OfflinePlay} />
+          <Stack.Screen
+            name="LeaderBoardScreen"
+            component={LeaderBoard}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
       {showmodal && <SettingsModalView hide={hidemodal} lobby={navigator} />}

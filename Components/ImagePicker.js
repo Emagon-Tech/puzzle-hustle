@@ -12,6 +12,8 @@ import {
   Animated,
 } from "react-native";
 
+import AsyncStorage from "@react-native-community/async-storage";
+
 import { SegmentedControls } from "react-native-radio-buttons";
 
 import { ScrollView } from "react-native-gesture-handler";
@@ -30,22 +32,41 @@ Icon.loadFont();
 
 const { width, height } = Dimensions.get("window");
 
-export default ImagePicker = ({ route, navigation }) => {
+const ImagePicker = ({ route, navigation }) => {
   const options = ["Easy", "Medium", "Hard"];
   const { state, dispatch } = React.useContext(SoundContext);
   const [difficultyLevel, setDifficultyLevel] = useState("Easy");
   const [netstatus, setnetstatus] = useState();
   const [netstate, setnetstate] = useState();
+  const [coins, setCoins] = useState();
+  const [issignedup, setIsSignedUp] = useState();
+  const [rewardcoins, setRewardCoins] = useState(100);
   const [animeopacity, setanimeopactiyy] = useState(new Animated.Value(1));
-
   const setSelectedDifficultyLevel = (selectedOption) => {
     console.log(selectedOption);
     setDifficultyLevel(selectedOption);
+    switch (selectedOption) {
+      case "Easy":
+        setRewardCoins(100);
+
+        break;
+      case "Medium":
+        setRewardCoins(300);
+
+        break;
+      case "Hard":
+        setRewardCoins(500);
+
+        break;
+
+      default:
+        setRewardCoins(100);
+        break;
+    }
   };
   const [imageUrl, setImageUrl] = useState(catarray[0].uri);
   const [title, setTitle] = useState(catarray[0].title);
   const [modalVisible, setModalVisible] = useState(false);
-
   const unsubscribe = NetInfo.addEventListener((state) => {
     console.log("Connection type", state.type);
     console.log("Is connected?", state.isConnected);
@@ -55,13 +76,30 @@ export default ImagePicker = ({ route, navigation }) => {
     }
   });
   useEffect(() => {
+    getCoins();
+  }, []);
+
+  useEffect(() => {
     animateopacity();
   }, [difficultyLevel]);
+
   useEffect(() => {
     return () => {
       unsubscribe();
     };
   });
+  const getCoins = async () => {
+    console.log("in gt coins");
+    const USER_JSON = await AsyncStorage.getItem("CURRENT_USER");
+    console.log(USER_JSON);
+    if (USER_JSON) {
+      const USER = JSON.parse(USER_JSON);
+      setIsSignedUp(true);
+      setCoins(USER.coins);
+    } else {
+      setIsSignedUp(false);
+    }
+  };
   function Card({ item }) {
     const { uri, title, label } = item;
     const cardstyle = {
@@ -119,7 +157,7 @@ export default ImagePicker = ({ route, navigation }) => {
       justifyContent: "center",
     },
     textstyle: {
-      fontSize: 20,
+      fontSize: 18,
       textAlign: "center",
       color: "#FFFFFF",
       marginVertical: 10,
@@ -226,7 +264,16 @@ export default ImagePicker = ({ route, navigation }) => {
               }}
               onPress={() => setModalVisible(false)}
             />
-
+            <View style={{ position: "absolute", top: 100, left: 260 }}>
+              <Text style={{ color: "white" }}>Reward:</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ color: "white" }}>+{rewardcoins} </Text>
+                <Image
+                  source={require("../assets/coins.png")}
+                  style={{ height: 20, width: 20 }}
+                />
+              </View>
+            </View>
             <SegmentedControls
               options={options}
               onSelection={setSelectedDifficultyLevel}
@@ -251,6 +298,7 @@ export default ImagePicker = ({ route, navigation }) => {
                   navigation.navigate("GameScreen", {
                     level: difficultyLevel,
                     category: title,
+                    reward: rewardcoins,
                   });
                 }
               }}
@@ -262,15 +310,38 @@ export default ImagePicker = ({ route, navigation }) => {
       </Modal>
       {netstatus ? (
         <SafeAreaView>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-evenly" }}
-          >
-            <Text style={styles.textstyle}>Cash:100</Text>
-            <Text style={styles.textstyle}>Coins:2300</Text>
-            <Text style={styles.textstyle}>Add Friend</Text>
-          </View>
+          {issignedup ? (
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+            >
+              <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                <Text style={styles.textstyle}>vault : {coins} </Text>
+                <Image
+                  source={require("../assets/coins.png")}
+                  style={{ height: 20, width: 20, top: 15 }}
+                />
+              </View>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  navigation.navigate("LeaderBoardScreen");
+                }}
+              >
+                <View
+                  style={{ flexDirection: "row", justifyContent: "center" }}
+                >
+                  <Image
+                    source={require("../assets/leaderboard.png")}
+                    style={{ height: 30, width: 30, top: 10 }}
+                  />
+                  <Text style={styles.textstyle}>leaderboard</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          ) : (
+            <View></View>
+          )}
           <Text style={[styles.textstyle, { margin: 30 }]}>
-            Click to play {title} puzzle
+            Play {title} Puzzle
           </Text>
           <View
             style={{
@@ -369,3 +440,5 @@ export default ImagePicker = ({ route, navigation }) => {
     </ImageBackground>
   );
 };
+
+export default ImagePicker;

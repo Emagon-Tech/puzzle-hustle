@@ -7,6 +7,7 @@ let gridsize = 0;
 const Game = ({ route, navigation }) => {
   const { level } = route.params;
   const { category } = route.params;
+  const { reward } = route.params;
   switch (level) {
     case "Easy":
       gridsize = 3;
@@ -44,6 +45,7 @@ const Game = ({ route, navigation }) => {
           height={300}
           onBack={goBack}
           category={category}
+          reward={reward}
         />
       </ImageBackground>
     </>

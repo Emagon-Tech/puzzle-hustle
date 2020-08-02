@@ -41,7 +41,7 @@ var hintimage = [];
 
 const Tiles = (props) => {
   console.log("rendering component");
-  const { rows, cols, category } = props;
+  const { rows, cols, category, reward } = props;
   const [splitImages, setSplitImages] = useState([]);
   const [hole, setHole] = useState();
   const [shownums, setshownums] = useState(false);
@@ -109,7 +109,7 @@ const Tiles = (props) => {
     setshowstart(false);
     setrestart(false);
     setHole(999);
-    setsolved(true);
+    setsolved(false);
     steps = 0;
     await fetch(
       `https://slicer12.herokuapp.com/image_slicer?gs=${rows}&cat=${category}`
@@ -267,6 +267,7 @@ const Tiles = (props) => {
           back={goBack}
           nextpuzzle={getImageFromServer}
           netstat={netstate}
+          reward={reward}
         />
       )}
       <SafeAreaView style={styles.container}>
